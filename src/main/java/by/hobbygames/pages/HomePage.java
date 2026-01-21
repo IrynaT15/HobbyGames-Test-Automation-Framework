@@ -1,6 +1,7 @@
 package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
+import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
 public class HomePage {
@@ -15,6 +16,7 @@ public class HomePage {
     private final By SEARCH_BUTTON = By.xpath("//span[@class='icon icon-ic_search_black search-btn']");
 
     private WebDriver driver;
+    private static final Logger logger = LogManager.getLogger();
 
     public HomePage() {
         this.driver = Driver.getDriver();
@@ -22,14 +24,17 @@ public class HomePage {
 
     public void open() {
         driver.get(BASE_URL);
+        logger.info("Home Page is opened.");
     }
 
     public void clickCookieAlertClose() {
         driver.findElement(COOKIE_ALERT_CLOSE).click();
+        logger.info("Cookies are accepted.");
     }
 
     public void clickLoginButton() {
         driver.findElement(LOGIN_BUTTON).click();
+        logger.info("Login Button is clicked.");
     }
 
     public boolean isLoginButtonDisplayed() {

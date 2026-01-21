@@ -1,9 +1,8 @@
 package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
+import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
-
-import java.util.logging.*;
 
 public class LoginPage {
     public final String LOGIN_POPUP_TITLE_TEXT = "Вход";
@@ -31,6 +30,7 @@ public class LoginPage {
     private final By ERROR_PASSWORD_INPUT = By.xpath("//label[@class='password-group']/div[@class='error']");
 
     private WebDriver driver;
+    private static final Logger logger = LogManager.getLogger();
 
     public LoginPage() {
         this.driver = Driver.getDriver();
@@ -38,18 +38,22 @@ public class LoginPage {
 
     public void clickCloseButtonInLoginPopup() {
         driver.findElement(LOGIN_POPUP_CLOSE_BUTTON).click();
+        logger.info("Close button is clicked in the Login popup.");
     }
 
     public void clickForgotModalLinkInLoginPopup() {
         driver.findElement(LOGIN_POPUP_FORGOT_MODAL_LINK).click();
+        logger.info("Forgot link is clicked in the Login popup.");
     }
 
     public void clickRegisterModalLinkInLoginPopup() {
         driver.findElement(LOGIN_POPUP_REGISTER_MODAL_LINK).click();
+        logger.info("Registration link is clicked in the Login popup.");
     }
 
     public void clickSubmitButtonInLoginPopup() {
         driver.findElement(LOGIN_POPUP_SUBMIT_BUTTON).click();
+        logger.info("Submit button is clicked in the Login popup.");
     }
 
     public boolean isLoginPopupTitleDisplayed() {
