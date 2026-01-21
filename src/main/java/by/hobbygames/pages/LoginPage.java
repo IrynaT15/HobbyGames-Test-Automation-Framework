@@ -5,25 +5,25 @@ import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
 public class LoginPage {
-    public final String LOGIN_POPUP_TITLE_TEXT = "Вход";
-    public final String LOGIN_POPUP_SUBMIT_BUTTON_TEXT = "Вход";
-    public final String LOGIN_POPUP_LOGIN_FIELD_PLACEHOLDER = "Email или телефон";
-    public final String LOGIN_POPUP_PASSWORD_FIELD_PLACEHOLDER = "Пароль";
-    public final String LOGIN_POPUP_FORGOT_MODAL_LINK_TEXT = "Не помните?";
-    public final String LOGIN_POPUP_REGISTER_MODAL_LINK_TEXT = "Регистрация нового пользователя";
+    public final String TITLE_TEXT = "Вход";
+    public final String SUBMIT_BUTTON_TEXT = "Вход";
+    public final String LOGIN_FIELD_PLACEHOLDER = "Email или телефон";
+    public final String PASSWORD_FIELD_PLACEHOLDER = "Пароль";
+    public final String FORGOT_LINK_TEXT = "Не помните?";
+    public final String REGISTER_LINK_TEXT = "Регистрация нового пользователя";
     public final String ERROR_TEXT_FOR_EMPTY_LOGIN= "Введите телефон или электронную почту";
     public final String ERROR_TEXT_FOR_EMPTY_PASSWORD = "Введите пароль";
     public final String ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL = "Неверный телефон/e-mail";
     public final String NOT_LOGGED_IN_EMAIL = "123qweASD@gmail.com";
 
-    private final By LOGIN_POPUP_TITLE = By.xpath("//div[@class='login-popup']/div[@class='h2']");
-    private final By LOGIN_POPUP_CLOSE_BUTTON = By.xpath("//div[@class='vex-close']");
-    private final By LOGIN_POPUP_SUBMIT_BUTTON = By.xpath("//input[@class='btn send-login btn-s']");
-    private final By LOGIN_POPUP_LOGIN_FIELD = By.xpath("//input[@name='login']");
-    private final By LOGIN_POPUP_PASSWORD_FIELD = By.xpath("//input[@name='password']");
-    private final By LOGIN_POPUP_FORGOT_MODAL_LINK = By.xpath("//a[@class='js-openForgotModal']");
+    private final By TITLE = By.xpath("//div[@class='login-popup']/div[@class='h2']");
+    private final By CLOSE_BUTTON = By.xpath("//div[@class='vex-close']");
+    private final By SUBMIT_BUTTON = By.xpath("//input[@type='submit']");
+    private final By LOGIN_FIELD = By.xpath("//input[@name='login']");
+    private final By PASSWORD_FIELD = By.xpath("//input[@name='password']");
+    private final By FORGOT_LINK = By.xpath("//a[@class='js-openForgotModal']");
     private final By FORGOT_POPUP = By.xpath("//div[@class='login-popup forgot_popup']");
-    private final By LOGIN_POPUP_REGISTER_MODAL_LINK = By.xpath("//a[@class='footer-btn js-openRegisterModal']");
+    private final By REGISTER_LINK = By.xpath("//a[@class='footer-btn js-openRegisterModal']");
     private final By REGISTER_POPUP = By.xpath("//div[@class='register_popup']");
     private final By GLOBAL_LOADER = By.xpath("//div[@class='global-loader']");
     private final By ERROR_LOGIN_INPUT = By.xpath("//label[@data-scenario='login']/div[@class='error']");
@@ -37,47 +37,47 @@ public class LoginPage {
     }
 
     public void clickCloseButtonInLoginPopup() {
-        driver.findElement(LOGIN_POPUP_CLOSE_BUTTON).click();
+        driver.findElement(CLOSE_BUTTON).click();
         logger.info("Close button is clicked in the Login popup.");
     }
 
     public void clickForgotModalLinkInLoginPopup() {
-        driver.findElement(LOGIN_POPUP_FORGOT_MODAL_LINK).click();
+        driver.findElement(FORGOT_LINK).click();
         logger.info("Forgot link is clicked in the Login popup.");
     }
 
     public void clickRegisterModalLinkInLoginPopup() {
-        driver.findElement(LOGIN_POPUP_REGISTER_MODAL_LINK).click();
+        driver.findElement(REGISTER_LINK).click();
         logger.info("Registration link is clicked in the Login popup.");
     }
 
     public void clickSubmitButtonInLoginPopup() {
-        driver.findElement(LOGIN_POPUP_SUBMIT_BUTTON).click();
+        driver.findElement(SUBMIT_BUTTON).click();
         logger.info("Submit button is clicked in the Login popup.");
     }
 
     public boolean isLoginPopupTitleDisplayed() {
-        return driver.findElement(LOGIN_POPUP_TITLE).isDisplayed();
+        return driver.findElement(TITLE).isDisplayed();
     }
 
     public boolean isCloseButtonDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_POPUP_CLOSE_BUTTON).isDisplayed();
+        return driver.findElement(CLOSE_BUTTON).isDisplayed();
     }
 
     public boolean isSubmitButtonDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_POPUP_SUBMIT_BUTTON).isDisplayed();
+        return driver.findElement(SUBMIT_BUTTON).isDisplayed();
     }
 
     public boolean isLoginFieldDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_POPUP_LOGIN_FIELD).isDisplayed();
+        return driver.findElement(LOGIN_FIELD).isDisplayed();
     }
 
     public boolean isPasswordFieldDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_POPUP_PASSWORD_FIELD).isDisplayed();
+        return driver.findElement(PASSWORD_FIELD).isDisplayed();
     }
 
     public boolean isForgotModalLinkDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_POPUP_FORGOT_MODAL_LINK).isDisplayed();
+        return driver.findElement(FORGOT_LINK).isDisplayed();
     }
 
     public boolean isForgotPopupDisplayed() {
@@ -86,7 +86,7 @@ public class LoginPage {
     }
 
     public boolean isRegisterModalLinkDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_POPUP_REGISTER_MODAL_LINK).isDisplayed();
+        return driver.findElement(REGISTER_LINK).isDisplayed();
     }
 
     public boolean isRegisterPopupDisplayed() {
@@ -106,27 +106,27 @@ public class LoginPage {
     }
 
     public String getLoginPopupTitle() {
-        return driver.findElement(LOGIN_POPUP_TITLE).getText();
+        return driver.findElement(TITLE).getText();
     }
 
     public String getLoginPopupSubmitButtonTitle() {
-        return driver.findElement(LOGIN_POPUP_SUBMIT_BUTTON).getAttribute("value");
+        return driver.findElement(SUBMIT_BUTTON).getAttribute("value");
     }
 
     public String getLoginPopupLoginFieldPlaceholderText() {
-        return driver.findElement(LOGIN_POPUP_LOGIN_FIELD).getAttribute("placeholder");
+        return driver.findElement(LOGIN_FIELD).getAttribute("placeholder");
     }
 
     public String getLoginPopupPasswordFieldPlaceholderText() {
-        return driver.findElement(LOGIN_POPUP_PASSWORD_FIELD).getAttribute("placeholder");
+        return driver.findElement(PASSWORD_FIELD).getAttribute("placeholder");
     }
 
     public String getLoginPopupForgotModalLinkText() {
-        return driver.findElement(LOGIN_POPUP_FORGOT_MODAL_LINK).getText();
+        return driver.findElement(FORGOT_LINK).getText();
     }
 
     public String getLoginPopupRegisterModalLinkText() {
-        return driver.findElement(LOGIN_POPUP_REGISTER_MODAL_LINK).getText();
+        return driver.findElement(REGISTER_LINK).getText();
     }
 
     public String getErrorTextForLoginField() {
@@ -138,6 +138,6 @@ public class LoginPage {
     }
 
     public void putNotLoggedInEmailToLoginField() {
-        driver.findElement(LOGIN_POPUP_LOGIN_FIELD).sendKeys(NOT_LOGGED_IN_EMAIL);
+        driver.findElement(LOGIN_FIELD).sendKeys(NOT_LOGGED_IN_EMAIL);
     }
 }

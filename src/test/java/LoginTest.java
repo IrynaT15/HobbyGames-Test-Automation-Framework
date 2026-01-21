@@ -19,13 +19,15 @@ public class LoginTest {
 
     @Test
     public void testLoginPopupTitleIsDisplayedAndTextIsCorrect() {
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isLoginPopupTitleDisplayed(),
                 "The title is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.LOGIN_POPUP_TITLE_TEXT, loginPage.getLoginPopupTitle());
+        Assertions.assertEquals(loginPage.TITLE_TEXT, loginPage.getLoginPopupTitle());
     }
 
     @Test
     public void testCloseButtonIsDisplayedInLoginPopup() {
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isCloseButtonDisplayedInLoginPopup(),
                 "The Close button is not displayed in the Login Popup.");
     }
@@ -41,31 +43,34 @@ public class LoginTest {
     public void testSubmitButtonIsDisplayedAndTextIsCorrectInLoginPopup() {
         Assertions.assertTrue(loginPage.isSubmitButtonDisplayedInLoginPopup(),
                 "The Submit button is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.LOGIN_POPUP_SUBMIT_BUTTON_TEXT,
+        Assertions.assertEquals(loginPage.SUBMIT_BUTTON_TEXT,
                 loginPage.getLoginPopupSubmitButtonTitle());
     }
 
     @Test
     public void testLoginFieldIsDisplayedAndPlaceholderTextIsCorrectInLoginPopup() {
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isLoginFieldDisplayedInLoginPopup(),
                 "The Login field is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.LOGIN_POPUP_LOGIN_FIELD_PLACEHOLDER,
+        Assertions.assertEquals(loginPage.LOGIN_FIELD_PLACEHOLDER,
                 loginPage.getLoginPopupLoginFieldPlaceholderText());
     }
 
     @Test
     public void testPasswordFieldIsDisplayedAndPlaceholderTextIsCorrectInLoginPopup() {
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isPasswordFieldDisplayedInLoginPopup(),
                 "The Password field is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.LOGIN_POPUP_PASSWORD_FIELD_PLACEHOLDER,
+        Assertions.assertEquals(loginPage.PASSWORD_FIELD_PLACEHOLDER,
                 loginPage.getLoginPopupPasswordFieldPlaceholderText());
     }
 
     @Test
     public void testForgotModalLinkIsDisplayedAndTextIsCorrectInLoginPopup() {
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isForgotModalLinkDisplayedInLoginPopup(),
                 "The Forgot Modal link is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.LOGIN_POPUP_FORGOT_MODAL_LINK_TEXT,
+        Assertions.assertEquals(loginPage.FORGOT_LINK_TEXT,
                 loginPage.getLoginPopupForgotModalLinkText());
     }
 
@@ -80,9 +85,10 @@ public class LoginTest {
 
     @Test
     public void testRegisterModalLinkIsDisplayedAndTextIsCorrectInLoginPopup() {
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isRegisterModalLinkDisplayedInLoginPopup(),
                 "The Register Modal link is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.LOGIN_POPUP_REGISTER_MODAL_LINK_TEXT,
+        Assertions.assertEquals(loginPage.REGISTER_LINK_TEXT,
                 loginPage.getLoginPopupRegisterModalLinkText());
     }
 
@@ -97,7 +103,9 @@ public class LoginTest {
 
     @Test
     public void tesGlobalLoaderAppearsWhenEnterButtonIsClicked() {
+        Waits.waitFor(20);
         loginPage.clickSubmitButtonInLoginPopup();
+        Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isGlobalLoaderDisplayed());
     }
 
@@ -117,6 +125,7 @@ public class LoginTest {
 
     @Test
     public void testErrorMessagesForNotLoggedInEmailAndEmptyPassword() {
+        Waits.waitFor(20);
         loginPage.putNotLoggedInEmailToLoginField();
         loginPage.clickSubmitButtonInLoginPopup();
         Waits.waitFor(100);
