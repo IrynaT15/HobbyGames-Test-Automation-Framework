@@ -23,7 +23,6 @@ public class HomeTest {
     @Test
     public void testLoginPopupAppearsWhenLoginButtonIsClicked() {
         homePage.clickLoginButton();
-        Waits.waitFor(50);
         Assertions.assertTrue(homePage.isLoginPopupDisplayed());
     }
 

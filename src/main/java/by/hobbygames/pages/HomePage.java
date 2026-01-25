@@ -1,6 +1,7 @@
 package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
+import by.hobbygames.utils.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
@@ -28,12 +29,12 @@ public class HomePage {
     }
 
     public void clickCookieAlertClose() {
-        driver.findElement(COOKIE_ALERT_CLOSE).click();
+        Waits.waitAndClick(COOKIE_ALERT_CLOSE);
         logger.info("Cookies are accepted.");
     }
 
     public void clickLoginButton() {
-        driver.findElement(LOGIN_BUTTON).click();
+        Waits.waitAndClick(LOGIN_BUTTON);
         logger.info("Login Button is clicked.");
     }
 
@@ -42,8 +43,9 @@ public class HomePage {
     }
 
     public boolean isLoginPopupDisplayed() {
-        return !driver.findElements(LOGIN_POPUP).isEmpty()
-                && driver.findElements(LOGIN_POPUP).get(0).isDisplayed();
+          return Waits.wait(LOGIN_POPUP).isDisplayed();
+//        return !driver.findElements(LOGIN_POPUP).isEmpty()
+//                && driver.findElements(LOGIN_POPUP).get(0).isDisplayed();
     }
 
     public String getLoginButtonTitle() {

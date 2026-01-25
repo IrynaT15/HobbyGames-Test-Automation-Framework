@@ -1,8 +1,10 @@
 package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
+import by.hobbygames.utils.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 
 public class LoginPage {
     public final String TITLE_TEXT = "Вход";
@@ -38,71 +40,70 @@ public class LoginPage {
 
     public void clickCloseButtonInLoginPopup() {
         driver.findElement(CLOSE_BUTTON).click();
-        logger.info("Close button is clicked in the Login popup.");
+        logger.info("[Close] button is clicked in the Login popup.");
     }
 
     public void clickForgotModalLinkInLoginPopup() {
         driver.findElement(FORGOT_LINK).click();
-        logger.info("Forgot link is clicked in the Login popup.");
+        logger.info("[Forgot] link is clicked in the Login popup.");
     }
 
     public void clickRegisterModalLinkInLoginPopup() {
         driver.findElement(REGISTER_LINK).click();
-        logger.info("Registration link is clicked in the Login popup.");
+        logger.info("[Registration] link is clicked in the Login popup.");
     }
 
     public void clickSubmitButtonInLoginPopup() {
         driver.findElement(SUBMIT_BUTTON).click();
-        logger.info("Submit button is clicked in the Login popup.");
+        logger.info("[Submit] button is clicked in the Login popup.");
     }
 
     public boolean isLoginPopupTitleDisplayed() {
-        return driver.findElement(TITLE).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(TITLE, "Title");
     }
 
     public boolean isCloseButtonDisplayedInLoginPopup() {
-        return driver.findElement(CLOSE_BUTTON).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(CLOSE_BUTTON, "[Close] button");
     }
 
     public boolean isSubmitButtonDisplayedInLoginPopup() {
-        return driver.findElement(SUBMIT_BUTTON).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(SUBMIT_BUTTON, "[Submit] button");
     }
 
     public boolean isLoginFieldDisplayedInLoginPopup() {
-        return driver.findElement(LOGIN_FIELD).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(LOGIN_FIELD, "[Login] field");
     }
 
     public boolean isPasswordFieldDisplayedInLoginPopup() {
-        return driver.findElement(PASSWORD_FIELD).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(PASSWORD_FIELD, "[Password] field");
     }
 
     public boolean isForgotModalLinkDisplayedInLoginPopup() {
-        return driver.findElement(FORGOT_LINK).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(FORGOT_LINK, "[Forgot] link");
     }
 
     public boolean isForgotPopupDisplayed() {
-        return !driver.findElements(FORGOT_POPUP).isEmpty()
-                && driver.findElements(FORGOT_POPUP).get(0).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(FORGOT_POPUP, "Forgot popup");
     }
 
     public boolean isRegisterModalLinkDisplayedInLoginPopup() {
-        return driver.findElement(REGISTER_LINK).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(REGISTER_LINK, "[Register] link");
     }
 
     public boolean isRegisterPopupDisplayed() {
-        return driver.findElement(REGISTER_POPUP).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(REGISTER_POPUP, "Register popup");
     }
 
     public boolean isGlobalLoaderDisplayed() {
-        return driver.findElements(GLOBAL_LOADER).get(0).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(GLOBAL_LOADER, "Global loader");
     }
 
     public boolean isErrorForIncorrectLoginInputDisplayed() {
-        return driver.findElement(ERROR_LOGIN_INPUT).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(ERROR_LOGIN_INPUT, "Error message for incorrect login");
     }
 
     public boolean isErrorForIncorrectPasswordInputDisplayed() {
-        return driver.findElement(ERROR_PASSWORD_INPUT).isDisplayed();
+        return Waits.waitAndCheckElementIsDisplayed(ERROR_PASSWORD_INPUT, "Error message for incorrect password");
     }
 
     public String getLoginPopupTitle() {
