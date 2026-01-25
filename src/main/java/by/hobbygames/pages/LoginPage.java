@@ -24,12 +24,13 @@ public class LoginPage {
     private final By TITLE = By.xpath("//div[@class='login-popup']/div[@class='h2']");
     private final By CLOSE_BUTTON = By.xpath("//div[@class='vex-close']");
     private final By SUBMIT_BUTTON = By.xpath("//input[@type='submit']");
-    public final By LOGIN_FIELD = By.xpath("//input[@name='login']");
-    public final By PASSWORD_FIELD = By.xpath("//input[@name='password']");
     private final By FORGOT_LINK = By.xpath("//a[@class='js-openForgotModal']");
     private final By FORGOT_POPUP = By.xpath("//div[@class='login-popup forgot_popup']");
     private final By REGISTER_LINK = By.xpath("//a[@class='footer-btn js-openRegisterModal']");
     private final By REGISTER_POPUP = By.xpath("//div[@class='register_popup']");
+
+    public final By LOGIN_FIELD = By.xpath("//input[@name='login']");
+    public final By PASSWORD_FIELD = By.xpath("//input[@name='password']");
     public final By ERROR_LOGIN_INPUT = By.xpath("//label[@data-scenario='login']/div[@class='error']");
     public final By ERROR_PASSWORD_INPUT = By.xpath("//label[@class='password-group']/div[@class='error']");
 
@@ -134,5 +135,10 @@ public class LoginPage {
 
     public void putValueToField(By field, String value) {
         Waits.waitAndInput(field, value);
+    }
+
+    public void putValueAndSubmit(By field, String value) {
+        putValueToField(field, value);
+        clickSubmitButtonInLoginPopup();
     }
 }

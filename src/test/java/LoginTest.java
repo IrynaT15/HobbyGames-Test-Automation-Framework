@@ -117,8 +117,7 @@ public class LoginTest {
 
     @Test
     public void testErrorMessagesForNotLoggedInEmail() {
-        loginPage.putValueToField(loginPage.LOGIN_FIELD, loginPage.NOT_LOGGED_IN_EMAIL);
-        loginPage.clickSubmitButtonInLoginPopup();
+        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, loginPage.NOT_LOGGED_IN_EMAIL);
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
                 "The Error Message for login with not logged in email value is not displayed.");
@@ -130,8 +129,7 @@ public class LoginTest {
 
     @Test
     public void testErrorMessagesForInvalidEmail() {
-        loginPage.putValueToField(loginPage.LOGIN_FIELD, loginPage.INVALID_EMAIL);
-        loginPage.clickSubmitButtonInLoginPopup();
+        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, loginPage.INVALID_EMAIL);
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
                 "The Error Message for login with invalid email is not displayed.");
@@ -142,8 +140,7 @@ public class LoginTest {
 
     @Test
     public void testErrorMessagesForInvalidPassword() {
-        loginPage.putValueToField(loginPage.PASSWORD_FIELD, loginPage.INVALID_PASSWORD);
-        loginPage.clickSubmitButtonInLoginPopup();
+        loginPage.putValueAndSubmit(loginPage.PASSWORD_FIELD, loginPage.INVALID_PASSWORD);
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
                 "The Error Message for invalid password is not displayed.");
