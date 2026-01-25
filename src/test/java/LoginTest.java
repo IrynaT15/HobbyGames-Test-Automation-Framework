@@ -124,7 +124,6 @@ public class LoginTest {
         Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL,
                 loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT),
                 "The Error Message for login with not logged in email value is not correct.");
-
     }
 
     @Test
