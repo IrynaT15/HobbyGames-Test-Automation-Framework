@@ -1,6 +1,5 @@
 import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;
-import by.hobbygames.utils.*;
 import org.junit.jupiter.api.*;
 
 public class LoginTest {
@@ -20,7 +19,7 @@ public class LoginTest {
     public void testLoginPopupTitleIsDisplayedAndTextIsCorrect() {
         Assertions.assertTrue(loginPage.isLoginPopupTitleDisplayed(),
                 "The Title is not displayed in the Login Popup.");
-        Assertions.assertEquals(loginPage.TITLE_TEXT, loginPage.getLoginPopupTitle(),
+        Assertions.assertEquals(loginPage.TITLE_TEXT, loginPage.getPageTitle(),
                 "The [Title] text is not correct.");
     }
 
@@ -42,7 +41,7 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isSubmitButtonDisplayedInLoginPopup(),
                 "The [Submit] button is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.SUBMIT_BUTTON_TEXT,
-                loginPage.getLoginPopupSubmitButtonTitle(),
+                loginPage.getSubmitButtonTitle(),
                 "[Submit] button text is not correct.");
     }
 
@@ -51,7 +50,7 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isLoginFieldDisplayedInLoginPopup(),
                 "The Login field is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.LOGIN_FIELD_PLACEHOLDER,
-                loginPage.getLoginPopupLoginFieldPlaceholderText(),
+                loginPage.getLoginFieldPlaceholderText(),
                 "Login field placeholder is not displayed.");
     }
 
@@ -60,7 +59,7 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isPasswordFieldDisplayedInLoginPopup(),
                 "The [Password] field is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.PASSWORD_FIELD_PLACEHOLDER,
-                loginPage.getLoginPopupPasswordFieldPlaceholderText(),
+                loginPage.getPasswordFieldPlaceholderText(),
                 "Password field placeholder is not displayed.");
     }
 
@@ -69,7 +68,7 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isForgotModalLinkDisplayedInLoginPopup(),
                 "The Forgot Modal link is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.FORGOT_LINK_TEXT,
-                loginPage.getLoginPopupForgotModalLinkText(),
+                loginPage.getForgotModalLinkText(),
                 "The Forgot link test is not correct.");
     }
 
@@ -87,7 +86,7 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isRegisterModalLinkDisplayedInLoginPopup(),
                 "The Register Modal link is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.REGISTER_LINK_TEXT,
-                loginPage.getLoginPopupRegisterModalLinkText(),
+                loginPage.getRegisterModalLinkText(),
                 "Register link text is not correct.");
     }
 
@@ -106,30 +105,51 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
                 "The Error Message for empty login is not displayed.");
         Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_LOGIN,
-                loginPage.getErrorTextForLoginField(),
+                loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT),
                 "The Error message for empty login is not correct.");
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
                 "The Error Message for empty password is not displayed.");
         Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_PASSWORD,
-                loginPage.getErrorTextForPasswordField(),
+                loginPage.getErrorMessage(loginPage.ERROR_PASSWORD_INPUT),
                 "The Error Message for empty password is not correct.");
     }
 
     @Test
-    public void testErrorMessagesForNotLoggedInEmailAndEmptyPassword() {
-        loginPage.putNotLoggedInEmailToLoginField();
+    public void testErrorMessagesForNotLoggedInEmail() {
+        loginPage.putValueToField(loginPage.LOGIN_FIELD, loginPage.NOT_LOGGED_IN_EMAIL);
         loginPage.clickSubmitButtonInLoginPopup();
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
                 "The Error Message for login with not logged in email value is not displayed.");
-        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL, loginPage.getErrorTextForLoginField(),
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL,
+                loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT),
                 "The Error Message for login with not logged in email value is not correct.");
 
+    }
+
+    @Test
+    public void testErrorMessagesForInvalidEmail() {
+        loginPage.putValueToField(loginPage.LOGIN_FIELD, loginPage.INVALID_EMAIL);
+        loginPage.clickSubmitButtonInLoginPopup();
+
+        Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
+                "The Error Message for login with invalid email is not displayed.");
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_INVALID_EMAIL,
+                loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT),
+                "The Error Message for login with invalid email is not correct.");
+    }
+
+    @Test
+    public void testErrorMessagesForInvalidPassword() {
+        loginPage.putValueToField(loginPage.PASSWORD_FIELD, loginPage.INVALID_PASSWORD);
+        loginPage.clickSubmitButtonInLoginPopup();
+
         Assertions.assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
-                "The Error Message for empty password is not displayed.");
-        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_PASSWORD, loginPage.getErrorTextForPasswordField(),
-                "The Error Message for empty password is not correct.");
+                "The Error Message for invalid password is not displayed.");
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_INVALID_PASSWORD,
+                loginPage.getErrorMessage(loginPage.ERROR_PASSWORD_INPUT),
+                "The Error Message for invalid password is not correct.");
     }
 
     @AfterEach

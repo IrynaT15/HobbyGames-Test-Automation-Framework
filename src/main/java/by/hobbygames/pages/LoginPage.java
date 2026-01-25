@@ -4,7 +4,6 @@ import by.hobbygames.driver.*;
 import by.hobbygames.utils.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.*;
 
 public class LoginPage {
     public final String TITLE_TEXT = "Вход";
@@ -16,20 +15,23 @@ public class LoginPage {
     public final String ERROR_TEXT_FOR_EMPTY_LOGIN= "Введите телефон или электронную почту";
     public final String ERROR_TEXT_FOR_EMPTY_PASSWORD = "Введите пароль";
     public final String ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL = "Неверный телефон/e-mail";
+    public final String ERROR_TEXT_FOR_INVALID_EMAIL = "Введённые данные некорректны";
+    public final String ERROR_TEXT_FOR_INVALID_PASSWORD = "Неверный пароль";
     public final String NOT_LOGGED_IN_EMAIL = "123qweASD@gmail.com";
+    public final String INVALID_EMAIL = "123qwe";
+    public final String INVALID_PASSWORD = "123qwe";
 
     private final By TITLE = By.xpath("//div[@class='login-popup']/div[@class='h2']");
     private final By CLOSE_BUTTON = By.xpath("//div[@class='vex-close']");
     private final By SUBMIT_BUTTON = By.xpath("//input[@type='submit']");
-    private final By LOGIN_FIELD = By.xpath("//input[@name='login']");
-    private final By PASSWORD_FIELD = By.xpath("//input[@name='password']");
+    public final By LOGIN_FIELD = By.xpath("//input[@name='login']");
+    public final By PASSWORD_FIELD = By.xpath("//input[@name='password']");
     private final By FORGOT_LINK = By.xpath("//a[@class='js-openForgotModal']");
     private final By FORGOT_POPUP = By.xpath("//div[@class='login-popup forgot_popup']");
     private final By REGISTER_LINK = By.xpath("//a[@class='footer-btn js-openRegisterModal']");
     private final By REGISTER_POPUP = By.xpath("//div[@class='register_popup']");
-    private final By GLOBAL_LOADER = By.xpath("//div[@class='global-loader']");
-    private final By ERROR_LOGIN_INPUT = By.xpath("//label[@data-scenario='login']/div[@class='error']");
-    private final By ERROR_PASSWORD_INPUT = By.xpath("//label[@class='password-group']/div[@class='error']");
+    public final By ERROR_LOGIN_INPUT = By.xpath("//label[@data-scenario='login']/div[@class='error']");
+    public final By ERROR_PASSWORD_INPUT = By.xpath("//label[@class='password-group']/div[@class='error']");
 
     private WebDriver driver;
     private static final Logger logger = LogManager.getLogger();
@@ -102,39 +104,35 @@ public class LoginPage {
         return Waits.waitAndCheckElementIsDisplayed(ERROR_PASSWORD_INPUT, "Error message for incorrect password");
     }
 
-    public String getLoginPopupTitle() {
+    public String getPageTitle() {
         return driver.findElement(TITLE).getText();
     }
 
-    public String getLoginPopupSubmitButtonTitle() {
+    public String getSubmitButtonTitle() {
         return driver.findElement(SUBMIT_BUTTON).getAttribute("value");
     }
 
-    public String getLoginPopupLoginFieldPlaceholderText() {
+    public String getLoginFieldPlaceholderText() {
         return driver.findElement(LOGIN_FIELD).getAttribute("placeholder");
     }
 
-    public String getLoginPopupPasswordFieldPlaceholderText() {
+    public String getPasswordFieldPlaceholderText() {
         return driver.findElement(PASSWORD_FIELD).getAttribute("placeholder");
     }
 
-    public String getLoginPopupForgotModalLinkText() {
+    public String getForgotModalLinkText() {
         return driver.findElement(FORGOT_LINK).getText();
     }
 
-    public String getLoginPopupRegisterModalLinkText() {
+    public String getRegisterModalLinkText() {
         return driver.findElement(REGISTER_LINK).getText();
     }
 
-    public String getErrorTextForLoginField() {
-        return Waits.waitAndGetText(ERROR_LOGIN_INPUT);
+    public String getErrorMessage(By field) {
+        return Waits.waitAndGetText(field);
     }
 
-    public String getErrorTextForPasswordField() {
-        return Waits.waitAndGetText(ERROR_PASSWORD_INPUT);
-    }
-
-    public void putNotLoggedInEmailToLoginField() {
-        Waits.waitAndInput(LOGIN_FIELD, NOT_LOGGED_IN_EMAIL);
+    public void putValueToField(By field, String value) {
+        Waits.waitAndInput(field, value);
     }
 }
