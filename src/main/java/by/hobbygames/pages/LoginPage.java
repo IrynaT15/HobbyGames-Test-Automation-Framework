@@ -39,22 +39,22 @@ public class LoginPage {
     }
 
     public void clickCloseButtonInLoginPopup() {
-        driver.findElement(CLOSE_BUTTON).click();
+        Waits.waitAndClick(CLOSE_BUTTON);
         logger.info("[Close] button is clicked in the Login popup.");
     }
 
     public void clickForgotModalLinkInLoginPopup() {
-        driver.findElement(FORGOT_LINK).click();
+        Waits.waitAndClick(FORGOT_LINK);
         logger.info("[Forgot] link is clicked in the Login popup.");
     }
 
     public void clickRegisterModalLinkInLoginPopup() {
-        driver.findElement(REGISTER_LINK).click();
+        Waits.waitAndClick(REGISTER_LINK);
         logger.info("[Registration] link is clicked in the Login popup.");
     }
 
     public void clickSubmitButtonInLoginPopup() {
-        driver.findElement(SUBMIT_BUTTON).click();
+       Waits.waitAndClick(SUBMIT_BUTTON);
         logger.info("[Submit] button is clicked in the Login popup.");
     }
 
@@ -94,10 +94,6 @@ public class LoginPage {
         return Waits.waitAndCheckElementIsDisplayed(REGISTER_POPUP, "Register popup");
     }
 
-    public boolean isGlobalLoaderDisplayed() {
-        return Waits.waitAndCheckElementIsDisplayed(GLOBAL_LOADER, "Global loader");
-    }
-
     public boolean isErrorForIncorrectLoginInputDisplayed() {
         return Waits.waitAndCheckElementIsDisplayed(ERROR_LOGIN_INPUT, "Error message for incorrect login");
     }
@@ -131,14 +127,14 @@ public class LoginPage {
     }
 
     public String getErrorTextForLoginField() {
-        return driver.findElement(ERROR_LOGIN_INPUT).getText();
+        return Waits.waitAndGetText(ERROR_LOGIN_INPUT);
     }
 
     public String getErrorTextForPasswordField() {
-        return driver.findElement(ERROR_PASSWORD_INPUT).getText();
+        return Waits.waitAndGetText(ERROR_PASSWORD_INPUT);
     }
 
     public void putNotLoggedInEmailToLoginField() {
-        driver.findElement(LOGIN_FIELD).sendKeys(NOT_LOGGED_IN_EMAIL);
+        Waits.waitAndInput(LOGIN_FIELD, NOT_LOGGED_IN_EMAIL);
     }
 }

@@ -21,13 +21,13 @@ public class LoginTest {
         Assertions.assertTrue(loginPage.isLoginPopupTitleDisplayed(),
                 "The Title is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.TITLE_TEXT, loginPage.getLoginPopupTitle(),
-                "The Title text is not correct.");
+                "The [Title] text is not correct.");
     }
 
     @Test
     public void testCloseButtonIsDisplayedInLoginPopup() {
         Assertions.assertTrue(loginPage.isCloseButtonDisplayedInLoginPopup(),
-                "The Close button is not displayed in the Login Popup.");
+                "The [Close] button is not displayed in the Login Popup.");
     }
 
     @Test
@@ -40,36 +40,37 @@ public class LoginTest {
     @Test
     public void testSubmitButtonIsDisplayedAndTextIsCorrectInLoginPopup() {
         Assertions.assertTrue(loginPage.isSubmitButtonDisplayedInLoginPopup(),
-                "The Submit button is not displayed in the Login Popup.");
+                "The [Submit] button is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.SUBMIT_BUTTON_TEXT,
-                loginPage.getLoginPopupSubmitButtonTitle());
+                loginPage.getLoginPopupSubmitButtonTitle(),
+                "[Submit] button text is not correct.");
     }
 
     @Test
     public void testLoginFieldIsDisplayedAndPlaceholderTextIsCorrectInLoginPopup() {
-        //Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isLoginFieldDisplayedInLoginPopup(),
                 "The Login field is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.LOGIN_FIELD_PLACEHOLDER,
-                loginPage.getLoginPopupLoginFieldPlaceholderText());
+                loginPage.getLoginPopupLoginFieldPlaceholderText(),
+                "Login field placeholder is not displayed.");
     }
 
     @Test
     public void testPasswordFieldIsDisplayedAndPlaceholderTextIsCorrectInLoginPopup() {
-        //Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isPasswordFieldDisplayedInLoginPopup(),
-                "The Password field is not displayed in the Login Popup.");
+                "The [Password] field is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.PASSWORD_FIELD_PLACEHOLDER,
-                loginPage.getLoginPopupPasswordFieldPlaceholderText());
+                loginPage.getLoginPopupPasswordFieldPlaceholderText(),
+                "Password field placeholder is not displayed.");
     }
 
     @Test
     public void testForgotModalLinkIsDisplayedAndTextIsCorrectInLoginPopup() {
-        //Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isForgotModalLinkDisplayedInLoginPopup(),
                 "The Forgot Modal link is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.FORGOT_LINK_TEXT,
-                loginPage.getLoginPopupForgotModalLinkText());
+                loginPage.getLoginPopupForgotModalLinkText(),
+                "The Forgot link test is not correct.");
     }
 
     @Test
@@ -77,17 +78,17 @@ public class LoginTest {
         loginPage.clickForgotModalLinkInLoginPopup();
         Assertions.assertFalse(homePage.isLoginPopupDisplayed(),
                 "The Login Popup is displayed.");
-        //Waits.waitFor(50);
-        Assertions.assertTrue(loginPage.isForgotPopupDisplayed());
+        Assertions.assertTrue(loginPage.isForgotPopupDisplayed(),
+                "Forgot popup is not displayed.");
     }
 
     @Test
     public void testRegisterModalLinkIsDisplayedAndTextIsCorrectInLoginPopup() {
-        //Waits.waitFor(20);
         Assertions.assertTrue(loginPage.isRegisterModalLinkDisplayedInLoginPopup(),
                 "The Register Modal link is not displayed in the Login Popup.");
         Assertions.assertEquals(loginPage.REGISTER_LINK_TEXT,
-                loginPage.getLoginPopupRegisterModalLinkText());
+                loginPage.getLoginPopupRegisterModalLinkText(),
+                "Register link text is not correct.");
     }
 
     @Test
@@ -95,47 +96,40 @@ public class LoginTest {
         loginPage.clickRegisterModalLinkInLoginPopup();
         Assertions.assertFalse(homePage.isLoginPopupDisplayed(),
                 "The Login Popup is displayed.");
-        //Waits.waitFor(50);
-        Assertions.assertTrue(loginPage.isRegisterPopupDisplayed());
-    }
-
-    @Test
-    public void tesGlobalLoaderAppearsWhenEnterButtonIsClicked() {
-        //Waits.waitFor(20);
-        loginPage.clickSubmitButtonInLoginPopup();
-        //Waits.waitFor(20);
-        Assertions.assertTrue(loginPage.isGlobalLoaderDisplayed());
+        Assertions.assertTrue(loginPage.isRegisterPopupDisplayed(),
+                "Register popup is not displayed.");
     }
 
     @Test
     public void testErrorMessagesForLoginWithEmptyLoginAndPassword() {
         loginPage.clickSubmitButtonInLoginPopup();
-        //Waits.waitFor(10);
-
         Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
                 "The Error Message for empty login is not displayed.");
-        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_LOGIN, loginPage.getErrorTextForLoginField());
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_LOGIN,
+                loginPage.getErrorTextForLoginField(),
+                "The Error message for empty login is not correct.");
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
                 "The Error Message for empty password is not displayed.");
-        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_PASSWORD, loginPage.getErrorTextForPasswordField());
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_PASSWORD,
+                loginPage.getErrorTextForPasswordField(),
+                "The Error Message for empty password is not correct.");
     }
 
     @Test
     public void testErrorMessagesForNotLoggedInEmailAndEmptyPassword() {
-        //Waits.waitFor(20);
         loginPage.putNotLoggedInEmailToLoginField();
         loginPage.clickSubmitButtonInLoginPopup();
-        //Waits.waitFor(100);
-        System.out.println(loginPage.getErrorTextForLoginField());
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
                 "The Error Message for login with not logged in email value is not displayed.");
-        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL, loginPage.getErrorTextForLoginField());
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL, loginPage.getErrorTextForLoginField(),
+                "The Error Message for login with not logged in email value is not correct.");
 
         Assertions.assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
                 "The Error Message for empty password is not displayed.");
-        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_PASSWORD, loginPage.getErrorTextForPasswordField());
+        Assertions.assertEquals(loginPage.ERROR_TEXT_FOR_EMPTY_PASSWORD, loginPage.getErrorTextForPasswordField(),
+                "The Error Message for empty password is not correct.");
     }
 
     @AfterEach

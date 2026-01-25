@@ -10,13 +10,21 @@ import java.time.*;
 public class Waits {
     private static final Logger logger = LogManager.getLogger();
 
-    public static WebElement wait(By xpath) {
+    public static WebElement wait(By locator) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(xpath));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static void waitAndClick(By xpath) {
-       wait(xpath).click();
+    public static void waitAndClick(By locator) {
+       wait(locator).click();
+    }
+
+    public static void waitAndInput(By locator, String value) {
+        wait(locator).sendKeys(value);
+    }
+
+    public static String waitAndGetText(By locator) {
+        return wait(locator).getText();
     }
 
     public static boolean waitAndCheckElementIsDisplayed(By locator, String elementStr) {

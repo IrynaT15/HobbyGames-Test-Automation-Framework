@@ -43,9 +43,7 @@ public class HomePage {
     }
 
     public boolean isLoginPopupDisplayed() {
-          return Waits.wait(LOGIN_POPUP).isDisplayed();
-//        return !driver.findElements(LOGIN_POPUP).isEmpty()
-//                && driver.findElements(LOGIN_POPUP).get(0).isDisplayed();
+          return Waits.waitAndCheckElementIsDisplayed(LOGIN_POPUP, "Login popup");
     }
 
     public String getLoginButtonTitle() {
