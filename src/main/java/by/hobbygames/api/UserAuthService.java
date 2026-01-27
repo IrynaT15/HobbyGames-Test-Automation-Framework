@@ -20,7 +20,6 @@ public class UserAuthService {
 
     private Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "text/plain");
         headers.put("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
         headers.put("x-requested-with", "XMLHttpRequest");
         return headers;
