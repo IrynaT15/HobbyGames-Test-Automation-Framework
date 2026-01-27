@@ -51,4 +51,8 @@ public class UserAuthService {
     public int getStatusCode() {
         return response.getStatusCode();
     }
+
+    public String getMessage(String path) {
+        return response.body().jsonPath().getString(path);
+    }
 }
