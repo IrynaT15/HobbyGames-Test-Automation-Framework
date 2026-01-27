@@ -9,5 +9,7 @@ public class LoginTest {
         UserAuthService userAuthService = new UserAuthService();
         userAuthService.doRequest("dsgsvhc", "skdjnksvn", "email");
         userAuthService.printResponse();
+
+        Assertions.assertEquals(200, userAuthService.getStatusCode());
     }
 }
