@@ -2,6 +2,8 @@ package api;
 
 import by.hobbygames.api.*;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -103,12 +105,88 @@ public class LoginTest {
         );
     }
 
-    @Test
-    public void testLoginWithInvalidEmail() {
-        userAuthService.doRequest("@gmail.com", "70Ef0HOP", "email");
-        userAuthService.printResponse();
+    @ParameterizedTest
+    @MethodSource("testdata.InvalidEmailsProvider#provideEmailsWithMissingPart")
+    public void testLoginWithEmailsWithMissingPart(String email) {
+        userAuthService.doRequest(email, "70Ef0HOP", "email");
 
-        assertAll("Login test",
+        assertAll("Login test with emails with missing part",
+                () -> assertEquals(200, userAuthService.getStatusCode()),
+                () -> assertEquals("Неверный формат Электронной почты",
+                        userAuthService.getMessage("errors.email")),
+                () -> assertEquals("Введённые данные некорректны",
+                        userAuthService.getMessage("errors.login")),
+                () -> assertEquals("Неверный пароль",
+                        userAuthService.getMessage("errors.password")),
+                () -> assertNull(userAuthService.getMessage("errors.phone")),
+                () -> assertEquals("false",
+                        userAuthService.getMessage("success"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testdata.InvalidEmailsProvider#provideEmailsWithIllegalStructure")
+    public void testLoginWithEmailsWithIllegalStructure(String email) {
+        userAuthService.doRequest(email, "70Ef0HOP", "email");
+
+        assertAll("Login test with emails with illegal structure",
+                () -> assertEquals(200, userAuthService.getStatusCode()),
+                () -> assertEquals("Неверный формат Электронной почты",
+                        userAuthService.getMessage("errors.email")),
+                () -> assertEquals("Введённые данные некорректны",
+                        userAuthService.getMessage("errors.login")),
+                () -> assertEquals("Неверный пароль",
+                        userAuthService.getMessage("errors.password")),
+                () -> assertNull(userAuthService.getMessage("errors.phone")),
+                () -> assertEquals("false",
+                        userAuthService.getMessage("success"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testdata.InvalidEmailsProvider#provideEmailsWithIllegalCharacters")
+    public void testLoginWithEmailsWithIllegalCharacters(String email) {
+        userAuthService.doRequest(email, "70Ef0HOP", "email");
+
+        assertAll("Login test with emails with illegal characters",
+                () -> assertEquals(200, userAuthService.getStatusCode()),
+                () -> assertEquals("Неверный формат Электронной почты",
+                        userAuthService.getMessage("errors.email")),
+                () -> assertEquals("Введённые данные некорректны",
+                        userAuthService.getMessage("errors.login")),
+                () -> assertEquals("Неверный пароль",
+                        userAuthService.getMessage("errors.password")),
+                () -> assertNull(userAuthService.getMessage("errors.phone")),
+                () -> assertEquals("false",
+                        userAuthService.getMessage("success"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testdata.InvalidEmailsProvider#provideEmailsWithMultipleAt")
+    public void testLoginWithEmailsWithMultipleAt(String email) {
+        userAuthService.doRequest(email, "70Ef0HOP", "email");
+
+        assertAll("Login test with emails with multiple at",
+                () -> assertEquals(200, userAuthService.getStatusCode()),
+                () -> assertEquals("Неверный формат Электронной почты",
+                        userAuthService.getMessage("errors.email")),
+                () -> assertEquals("Введённые данные некорректны",
+                        userAuthService.getMessage("errors.login")),
+                () -> assertEquals("Неверный пароль",
+                        userAuthService.getMessage("errors.password")),
+                () -> assertNull(userAuthService.getMessage("errors.phone")),
+                () -> assertEquals("false",
+                        userAuthService.getMessage("success"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testdata.InvalidEmailsProvider#provideEmailsWithWhitespaces")
+    public void testLoginWithEmailsWithWhitespaces(String email) {
+        userAuthService.doRequest(email, "70Ef0HOP", "email");
+
+        assertAll("Login test with emails with whitespaces",
                 () -> assertEquals(200, userAuthService.getStatusCode()),
                 () -> assertEquals("Неверный формат Электронной почты",
                         userAuthService.getMessage("errors.email")),

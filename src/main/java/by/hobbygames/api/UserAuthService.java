@@ -1,6 +1,7 @@
 package by.hobbygames.api;
 
 
+import io.restassured.filter.session.*;
 import io.restassured.response.*;
 
 import java.util.*;
@@ -33,6 +34,7 @@ public class UserAuthService {
     public void doRequest(String login, String password, String scenario) {
         response =
                 given()
+                        .filter(SessionManager.getSession())
                         .baseUri(BASE_URL)
                         .queryParams(getQueryParams())
                         .headers(getHeaders())
