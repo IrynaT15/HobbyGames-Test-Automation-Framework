@@ -83,5 +83,24 @@ public class LoginTest {
                         userAuthService.getMessage("success"))
         );
     }
+
+    @Test
+    public void testLoginWithValidNotLoggedInPhoneNumber() {
+        userAuthService.doRequest("+375 44 760 3500", "Password123", "email");
+        userAuthService.printResponse();
+
+        assertAll("Login test",
+                () -> assertEquals(200, userAuthService.getStatusCode()),
+                () -> assertEquals("Такой телефон не зарегистрирован",
+                        userAuthService.getMessage("errors.phone")),
+                () -> assertEquals("Неверный телефон/e-mail",
+                        userAuthService.getMessage("errors.login")),
+                () -> assertEquals("Неверный пароль",
+                        userAuthService.getMessage("errors.password")),
+                () -> assertNull(userAuthService.getMessage("errors.email")),
+                () -> assertEquals("false",
+                        userAuthService.getMessage("success"))
+        );
+    }
 }
 
