@@ -33,7 +33,6 @@ public class LoginTest {
 
     @Test
     public void testLoginWithEmptyLoginAndProvidedPassword() {
-        UserAuthService userAuthService = new UserAuthService();
         userAuthService.doRequest("", "Password123", "email");
         userAuthService.printResponse();
 
@@ -52,7 +51,6 @@ public class LoginTest {
 
     @Test
     public void testLoginWithEmptyPasswordAndProvidedEmail() {
-        UserAuthService userAuthService = new UserAuthService();
         userAuthService.doRequest("it.19012026@gmail.com", "", "email");
         userAuthService.printResponse();
 
