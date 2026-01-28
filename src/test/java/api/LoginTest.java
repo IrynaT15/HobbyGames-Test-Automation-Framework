@@ -102,5 +102,24 @@ public class LoginTest {
                         userAuthService.getMessage("success"))
         );
     }
+
+    @Test
+    public void testLoginWithInvalidEmail() {
+        userAuthService.doRequest("@gmail.com", "70Ef0HOP", "email");
+        userAuthService.printResponse();
+
+        assertAll("Login test",
+                () -> assertEquals(200, userAuthService.getStatusCode()),
+                () -> assertEquals("Неверный формат Электронной почты",
+                        userAuthService.getMessage("errors.email")),
+                () -> assertEquals("Введённые данные некорректны",
+                        userAuthService.getMessage("errors.login")),
+                () -> assertEquals("Неверный пароль",
+                        userAuthService.getMessage("errors.password")),
+                () -> assertNull(userAuthService.getMessage("errors.phone")),
+                () -> assertEquals("false",
+                        userAuthService.getMessage("success"))
+        );
+    }
 }
 
