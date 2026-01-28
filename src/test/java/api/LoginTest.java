@@ -6,9 +6,15 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
+    UserAuthService userAuthService;
+
+    @BeforeEach
+    public void setUp() {
+        userAuthService = new UserAuthService();
+    }
+
     @Test
-    public void testLoginWithEmptyLoginAndPassword() {
-        UserAuthService userAuthService = new UserAuthService();
+    public void testLoginWithEmptyLoginAndEmptyPassword() {
         userAuthService.doRequest("", "", "email");
         userAuthService.printResponse();
 
