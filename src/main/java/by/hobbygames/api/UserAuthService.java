@@ -34,13 +34,12 @@ public class UserAuthService {
     public void doRequest(String login, String password, String scenario) {
         response =
                 given()
-                        .filter(SessionManager.getSession())
                         .baseUri(BASE_URL)
                         .queryParams(getQueryParams())
                         .headers(getHeaders())
                         .body(getBody(login, password, scenario))
                 .when()
-                        .post(BASE_URL);
+                        .post();
 
     }
 

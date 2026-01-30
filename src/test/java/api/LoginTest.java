@@ -9,10 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
     UserAuthService userAuthService;
+    LoginAssertions loginAssertions;
 
     @BeforeEach
     public void setUp() {
         userAuthService = new UserAuthService();
+        loginAssertions = new LoginAssertions();
     }
 
     @Test
@@ -105,22 +107,16 @@ public class LoginTest {
         );
     }
 
+
     @ParameterizedTest
     @MethodSource("testdata.InvalidEmailsProvider#provideEmailsWithMissingPart")
     public void testLoginWithEmailsWithMissingPart(String email) {
         userAuthService.doRequest(email, "70Ef0HOP", "email");
-
-        assertAll("Login test with emails with missing part",
-                () -> assertEquals(200, userAuthService.getStatusCode()),
-                () -> assertEquals("Неверный формат Электронной почты",
-                        userAuthService.getMessage("errors.email")),
-                () -> assertEquals("Введённые данные некорректны",
-                        userAuthService.getMessage("errors.login")),
-                () -> assertEquals("Неверный пароль",
-                        userAuthService.getMessage("errors.password")),
-                () -> assertNull(userAuthService.getMessage("errors.phone")),
-                () -> assertEquals("false",
-                        userAuthService.getMessage("success"))
+        loginAssertions.assertLoginErrors(
+                userAuthService,
+                "Неверный формат Электронной почты",
+                "Введённые данные некорректны",
+                "Неверный пароль"
         );
     }
 
@@ -129,17 +125,11 @@ public class LoginTest {
     public void testLoginWithEmailsWithIllegalStructure(String email) {
         userAuthService.doRequest(email, "70Ef0HOP", "email");
 
-        assertAll("Login test with emails with illegal structure",
-                () -> assertEquals(200, userAuthService.getStatusCode()),
-                () -> assertEquals("Неверный формат Электронной почты",
-                        userAuthService.getMessage("errors.email")),
-                () -> assertEquals("Введённые данные некорректны",
-                        userAuthService.getMessage("errors.login")),
-                () -> assertEquals("Неверный пароль",
-                        userAuthService.getMessage("errors.password")),
-                () -> assertNull(userAuthService.getMessage("errors.phone")),
-                () -> assertEquals("false",
-                        userAuthService.getMessage("success"))
+        loginAssertions.assertLoginErrors(
+                userAuthService,
+                "Неверный формат Электронной почты",
+                "Введённые данные некорректны",
+                "Неверный пароль"
         );
     }
 
@@ -148,17 +138,11 @@ public class LoginTest {
     public void testLoginWithEmailsWithIllegalCharacters(String email) {
         userAuthService.doRequest(email, "70Ef0HOP", "email");
 
-        assertAll("Login test with emails with illegal characters",
-                () -> assertEquals(200, userAuthService.getStatusCode()),
-                () -> assertEquals("Неверный формат Электронной почты",
-                        userAuthService.getMessage("errors.email")),
-                () -> assertEquals("Введённые данные некорректны",
-                        userAuthService.getMessage("errors.login")),
-                () -> assertEquals("Неверный пароль",
-                        userAuthService.getMessage("errors.password")),
-                () -> assertNull(userAuthService.getMessage("errors.phone")),
-                () -> assertEquals("false",
-                        userAuthService.getMessage("success"))
+        loginAssertions.assertLoginErrors(
+                userAuthService,
+                "Неверный формат Электронной почты",
+                "Введённые данные некорректны",
+                "Неверный пароль"
         );
     }
 
@@ -167,17 +151,11 @@ public class LoginTest {
     public void testLoginWithEmailsWithMultipleAt(String email) {
         userAuthService.doRequest(email, "70Ef0HOP", "email");
 
-        assertAll("Login test with emails with multiple at",
-                () -> assertEquals(200, userAuthService.getStatusCode()),
-                () -> assertEquals("Неверный формат Электронной почты",
-                        userAuthService.getMessage("errors.email")),
-                () -> assertEquals("Введённые данные некорректны",
-                        userAuthService.getMessage("errors.login")),
-                () -> assertEquals("Неверный пароль",
-                        userAuthService.getMessage("errors.password")),
-                () -> assertNull(userAuthService.getMessage("errors.phone")),
-                () -> assertEquals("false",
-                        userAuthService.getMessage("success"))
+        loginAssertions.assertLoginErrors(
+                userAuthService,
+                "Неверный формат Электронной почты",
+                "Введённые данные некорректны",
+                "Неверный пароль"
         );
     }
 
@@ -186,17 +164,11 @@ public class LoginTest {
     public void testLoginWithEmailsWithWhitespaces(String email) {
         userAuthService.doRequest(email, "70Ef0HOP", "email");
 
-        assertAll("Login test with emails with whitespaces",
-                () -> assertEquals(200, userAuthService.getStatusCode()),
-                () -> assertEquals("Неверный формат Электронной почты",
-                        userAuthService.getMessage("errors.email")),
-                () -> assertEquals("Введённые данные некорректны",
-                        userAuthService.getMessage("errors.login")),
-                () -> assertEquals("Неверный пароль",
-                        userAuthService.getMessage("errors.password")),
-                () -> assertNull(userAuthService.getMessage("errors.phone")),
-                () -> assertEquals("false",
-                        userAuthService.getMessage("success"))
+        loginAssertions.assertLoginErrors(
+                userAuthService,
+                "Неверный формат Электронной почты",
+                "Введённые данные некорректны",
+                "Неверный пароль"
         );
     }
 }
