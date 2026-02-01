@@ -1,7 +1,9 @@
 package by.hobbygames.api;
 
 
+import io.restassured.*;
 import io.restassured.filter.session.*;
+import io.restassured.http.*;
 import io.restassured.response.*;
 
 import java.util.*;
@@ -10,7 +12,6 @@ import static io.restassured.RestAssured.given;
 
 public class UserAuthService {
     private final String BASE_URL = "https://hobbygames.by/";
-
     private Response response;
 
     private Map<String, String> getQueryParams() {
