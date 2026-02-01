@@ -27,11 +27,6 @@ public class UserAuthService {
         return headers;
     }
 
-//    private String getBody(String login, String password) {
-//        String body = "login=" + login + "&password=" + password + "&scenario=email";
-//        return body;
-//    }
-
     public void doRequest(String login, String password) {
         response =
                 given()
@@ -43,7 +38,6 @@ public class UserAuthService {
                         .formParam("scenario", "email")
                 .when()
                         .post();
-
     }
 
     public void printResponse() {
@@ -57,10 +51,6 @@ public class UserAuthService {
 
     public String getMessage(String path) {
         return response.body().jsonPath().getString(path);
-    }
-
-    public Boolean isKeyPresent(String key1, String key2) {
-        return response.body().jsonPath().getMap(key1).containsKey(key2);
     }
 
     public Boolean isSuccess() {
