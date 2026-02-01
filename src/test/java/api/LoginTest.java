@@ -3,125 +3,134 @@ package api;
 import by.hobbygames.api.*;
 import org.apache.commons.logging.*;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.*;
-import org.junit.jupiter.params.provider.*;
+import testdata.*;
 
 public class LoginTest {
     private static final Log log = LogFactory.getLog(LoginTest.class);
     UserAuthService userAuthService;
-    LoginAssertions loginAssertions;
 
     @BeforeEach
     public void setUp() {
         userAuthService = new UserAuthService();
-        loginAssertions = new LoginAssertions();
     }
 
     @Test
     public void testLoginWithMissingCredentials() {
         userAuthService.doRequest("", "");
-        loginAssertions.assertResponseForFailedLoginWithPhoneAndPasswordAndLogin(
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Данные не введены",
-                "Введите пароль",
-                "Введите телефон или электронную почту"
+                ErrorMessages.PHONE_IS_NOT_PROVIDED,
+                null,
+                ErrorMessages.PASSWORD_IS_NOT_PROVIDED,
+                ErrorMessages.LOGIN_MISSING_CREDENTIALS
         );
     }
 
     @Test
     public void testLoginWithMissingLogin() {
-        userAuthService.doRequest("", "Password123");
-        loginAssertions.assertResponseForFailedLoginWithPhoneAndPasswordAndLogin(
+        userAuthService.doRequest("", LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Данные не введены",
-                "Неверный пароль",
-                "Введите телефон или электронную почту"
+                ErrorMessages.PHONE_IS_NOT_PROVIDED,
+                null,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                ErrorMessages.LOGIN_MISSING_CREDENTIALS
         );
     }
 
     @Test
     public void testLoginWithTooShortPhoneNumber() {
-        userAuthService.doRequest("4476522", "Password123");
-        loginAssertions.assertResponseForFailedLoginWithPhoneAndPasswordAndLogin(
+        userAuthService.doRequest(LoginCredentials.SHORT_PHONE, LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Слишком мало символов",
-                "Неверный пароль",
-                "Введённые данные некорректны"
+                ErrorMessages.PHONE_IS_TOO_SHORT,
+                null,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                ErrorMessages.LOGIN_INVALID_DATA
         );
     }
 
     @Test
     public void testLoginWithTooLongPhoneNumber() {
-        userAuthService.doRequest("+3754476766554", "Password123");
-        loginAssertions.assertResponseForFailedLoginWithPhoneAndPasswordAndLogin(
+        userAuthService.doRequest(LoginCredentials.LONG_PHONE, LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Слишком много символов",
-                "Неверный пароль",
-                "Введённые данные некорректны"
+                ErrorMessages.PHONE_IS_TOO_LONG,
+                null,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                ErrorMessages.LOGIN_INVALID_DATA
         );
     }
 
     @Test
     public void testLoginWithNotRegisteredPhoneNumber() {
-        userAuthService.doRequest("+375447676655", "Password123");
-        loginAssertions.assertResponseForFailedLoginWithPhoneAndPasswordAndLogin(
+        userAuthService.doRequest(LoginCredentials.NOT_REGISTERED_PHONE, LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Такой телефон не зарегистрирован",
-                "Неверный пароль",
-                "Неверный телефон/e-mail"
+                ErrorMessages.PHONE_IS_NOT_REGISTERED,
+                null,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                ErrorMessages.LOGIN_WRONG_PHONE_OR_EMAIL
         );
     }
 
     @Test
     public void testLoginWithMissingPassword() {
-        userAuthService.doRequest("it.19012026@gmail.com", "");
-        loginAssertions.assertResponseForFailedLoginWithPassword(
+        userAuthService.doRequest(LoginCredentials.REGISTERED_EMAIL, null);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Введите пароль"
+                null,null,
+                ErrorMessages.PASSWORD_IS_NOT_PROVIDED,
+                null
         );
     }
 
     @Test
     public void testLoginWithWrongPassword() {
-        userAuthService.doRequest("it.19012026@gmail.com", "Password123!");
-        loginAssertions.assertResponseForFailedLoginWithPassword(
+        userAuthService.doRequest(LoginCredentials.REGISTERED_EMAIL, LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Неверный пароль"
+                null, null,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                null
         );
     }
 
     @Test
     public void testLoginWithInvalidEmail() {
-        userAuthService.doRequest("it..19012026@gmail.com", "Password123!");
-        loginAssertions.assertResponseForFailedLoginWithEmailAndPasswordAndLogin(
+        userAuthService.doRequest(LoginCredentials.INVALID_EMAIL, LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Неверный формат Электронной почты",
-                "Неверный пароль",
-                "Введённые данные некорректны"
+                null,
+                ErrorMessages.EMAIL_IS_INVALID,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                ErrorMessages.LOGIN_INVALID_DATA
         );
     }
 
     @Test
     public void testLoginWithNotRegisteredEmail() {
-        userAuthService.doRequest("irina.test@gmail.com", "Password123!");
-        loginAssertions.assertResponseForFailedLoginWithEmailAndPasswordAndLogin(
+        userAuthService.doRequest(LoginCredentials.NOT_REGISTERED_EMAIL, LoginCredentials.PASSWORD);
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Такой E-Mail адрес не зарегистрирован",
-                "Неверный пароль",
-                "Неверный телефон/e-mail"
+                null,
+                ErrorMessages.EMAIL_IS_NOT_REGISTERED,
+                ErrorMessages.PASSWORD_IS_WRONG,
+                ErrorMessages.LOGIN_WRONG_PHONE_OR_EMAIL
         );
     }
 
     @Test
     public void testLoginResponseAfterThreeFailedLoginAttempts() {
-        userAuthService.doRequest("it.19012026@ gmail.com", "Password123!");
-        userAuthService.doRequest("it.19012026@ gmail.com", "Password123!");
-        userAuthService.doRequest("it.19012026@ gmail.com", "Password123!");
-        userAuthService.doRequest("it.19012026@ gmail.com", "Password123!");
-        loginAssertions.assertResponseForFailedLoginWithLogin(
+        int attemptsCount = 0;
+        while (attemptsCount < 4) {
+            userAuthService.doRequest(LoginCredentials.INVALID_EMAIL, LoginCredentials.PASSWORD);
+            attemptsCount ++;
+        }
+        LoginAssertions.assertFailedLogin(
                 userAuthService,
-                "Введённые данные некорректны"
+                null, null, null,
+                ErrorMessages.LOGIN_INVALID_DATA
         );
     }
 }
-

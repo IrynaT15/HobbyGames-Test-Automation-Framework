@@ -27,10 +27,10 @@ public class UserAuthService {
         return headers;
     }
 
-    private String getBody(String login, String password) {
-        String body = "login=" + login + "&password=" + password + "&scenario=email";
-        return body;
-    }
+//    private String getBody(String login, String password) {
+//        String body = "login=" + login + "&password=" + password + "&scenario=email";
+//        return body;
+//    }
 
     public void doRequest(String login, String password) {
         response =
@@ -38,7 +38,9 @@ public class UserAuthService {
                         .baseUri(BASE_URL)
                         .queryParams(getQueryParams())
                         .headers(getHeaders())
-                        .body(getBody(login, password))
+                        .formParam("login", login)
+                        .formParam("password", password)
+                        .formParam("scenario", "email")
                 .when()
                         .post();
 
@@ -57,7 +59,11 @@ public class UserAuthService {
         return response.body().jsonPath().getString(path);
     }
 
-    public Boolean isSuccess(String path) {
-        return response.body().jsonPath().getBoolean(path);
+    public Boolean isKeyPresent(String key1, String key2) {
+        return response.body().jsonPath().getMap(key1).containsKey(key2);
+    }
+
+    public Boolean isSuccess() {
+        return response.body().jsonPath().getBoolean("success");
     }
 }
