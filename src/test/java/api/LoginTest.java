@@ -3,7 +3,8 @@ package api;
 import by.hobbygames.api.*;
 import org.apache.commons.logging.*;
 import org.junit.jupiter.api.*;
-import testdata.*;
+import testdata.credentials.*;
+import testdata.errors.*;
 
 public class LoginTest {
     private static final Log log = LogFactory.getLog(LoginTest.class);
@@ -19,10 +20,10 @@ public class LoginTest {
         userAuthService.doRequest("", "");
         LoginAssertions.assertFailedLogin(
                 userAuthService,
-                ErrorMessages.PHONE_IS_NOT_PROVIDED,
+                ApiLoginErrors.PHONE_IS_NOT_PROVIDED,
                 null,
-                ErrorMessages.PASSWORD_IS_NOT_PROVIDED,
-                ErrorMessages.LOGIN_MISSING_CREDENTIALS
+                ApiLoginErrors.PASSWORD_IS_NOT_PROVIDED,
+                ApiLoginErrors.LOGIN_MISSING_CREDENTIALS
         );
     }
 
@@ -31,10 +32,10 @@ public class LoginTest {
         userAuthService.doRequest("", LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
-                ErrorMessages.PHONE_IS_NOT_PROVIDED,
+                ApiLoginErrors.PHONE_IS_NOT_PROVIDED,
                 null,
-                ErrorMessages.PASSWORD_IS_WRONG,
-                ErrorMessages.LOGIN_MISSING_CREDENTIALS
+                ApiLoginErrors.PASSWORD_IS_WRONG,
+                ApiLoginErrors.LOGIN_MISSING_CREDENTIALS
         );
     }
 
@@ -43,10 +44,10 @@ public class LoginTest {
         userAuthService.doRequest(LoginCredentials.SHORT_PHONE, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
-                ErrorMessages.PHONE_IS_TOO_SHORT,
+                ApiLoginErrors.PHONE_IS_TOO_SHORT,
                 null,
-                ErrorMessages.PASSWORD_IS_WRONG,
-                ErrorMessages.LOGIN_INVALID_DATA
+                ApiLoginErrors.PASSWORD_IS_WRONG,
+                ApiLoginErrors.LOGIN_INVALID_DATA
         );
     }
 
@@ -55,10 +56,10 @@ public class LoginTest {
         userAuthService.doRequest(LoginCredentials.LONG_PHONE, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
-                ErrorMessages.PHONE_IS_TOO_LONG,
+                ApiLoginErrors.PHONE_IS_TOO_LONG,
                 null,
-                ErrorMessages.PASSWORD_IS_WRONG,
-                ErrorMessages.LOGIN_INVALID_DATA
+                ApiLoginErrors.PASSWORD_IS_WRONG,
+                ApiLoginErrors.LOGIN_INVALID_DATA
         );
     }
 
@@ -67,10 +68,10 @@ public class LoginTest {
         userAuthService.doRequest(LoginCredentials.NOT_REGISTERED_PHONE, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
-                ErrorMessages.PHONE_IS_NOT_REGISTERED,
+                ApiLoginErrors.PHONE_IS_NOT_REGISTERED,
                 null,
-                ErrorMessages.PASSWORD_IS_WRONG,
-                ErrorMessages.LOGIN_WRONG_PHONE_OR_EMAIL
+                ApiLoginErrors.PASSWORD_IS_WRONG,
+                ApiLoginErrors.LOGIN_WRONG_PHONE_OR_EMAIL
         );
     }
 
@@ -80,7 +81,7 @@ public class LoginTest {
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null,null,
-                ErrorMessages.PASSWORD_IS_NOT_PROVIDED,
+                ApiLoginErrors.PASSWORD_IS_NOT_PROVIDED,
                 null
         );
     }
@@ -91,7 +92,7 @@ public class LoginTest {
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null, null,
-                ErrorMessages.PASSWORD_IS_WRONG,
+                ApiLoginErrors.PASSWORD_IS_WRONG,
                 null
         );
     }
@@ -102,9 +103,9 @@ public class LoginTest {
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null,
-                ErrorMessages.EMAIL_IS_INVALID,
-                ErrorMessages.PASSWORD_IS_WRONG,
-                ErrorMessages.LOGIN_INVALID_DATA
+                ApiLoginErrors.EMAIL_IS_INVALID,
+                ApiLoginErrors.PASSWORD_IS_WRONG,
+                ApiLoginErrors.LOGIN_INVALID_DATA
         );
     }
 
@@ -114,9 +115,9 @@ public class LoginTest {
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null,
-                ErrorMessages.EMAIL_IS_NOT_REGISTERED,
-                ErrorMessages.PASSWORD_IS_WRONG,
-                ErrorMessages.LOGIN_WRONG_PHONE_OR_EMAIL
+                ApiLoginErrors.EMAIL_IS_NOT_REGISTERED,
+                ApiLoginErrors.PASSWORD_IS_WRONG,
+                ApiLoginErrors.LOGIN_WRONG_PHONE_OR_EMAIL
         );
     }
 
@@ -130,7 +131,7 @@ public class LoginTest {
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null, null, null,
-                ErrorMessages.LOGIN_INVALID_DATA
+                ApiLoginErrors.LOGIN_INVALID_DATA
         );
     }
 }
