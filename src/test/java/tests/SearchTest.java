@@ -71,19 +71,31 @@ public class SearchTest {
 
         @Test
         public void testSmartSearchPopupAppearsWhenKeywordIsEntered() {
-            searchPage.putKeywordInSearchField(SearchTestData.VALID_SEARCH);
+            searchPage.putKeywordInSearchField(SearchTestData.EXISTING_SEARCH_ITEM);
             assertTrue(searchPage.isSmartSearchPopupDisplayed(),
                     "The Smart Search popup is not displayed");
         }
 
         @Test
-        public void testSearchWithValidKeyword() {
-            searchPage.putKeywordInSearchField(VALID_SEARCH);
+        public void testSearchForExisitingItems() {
+            searchPage.putKeywordInSearchField(EXISTING_SEARCH_ITEM);
             searchPage.clickSearchButton();
-            assertAll("Search result for search with a valid keyword",
-                    () -> assertEquals(URL_FOR_VALID_SEARCH_RESULT, searchPage.getCurrentUrl()),
+            assertAll("Search result for existing items",
+                    () -> assertEquals(URL_FOR_EXISTING_SEARCH_RESULT, searchPage.getCurrentUrl()),
                     () -> assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
                     () -> assertTrue(searchPage.getNumberOfFoundItemsText().contains("товаров"))
+            );
+        }
+
+        @Test
+        public void testSearchForNotExistingItems() {
+            searchPage.putKeywordInSearchField(NOT_EXISTING_SEARCH_ITEM);
+            searchPage.clickSearchButton();
+            assertAll("Search result for existing items",
+                    () -> assertEquals(URL_FOR_NOT_EXISTING_SEARCH_RESULT, searchPage.getCurrentUrl()),
+                    () -> assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
+                    () -> assertEquals("0", searchPage.getNumberOfFoundItemsText()),
+                    () -> assertEquals("Ничего не найдено.", searchPage.getProductContentNoResultText())
             );
         }
     }

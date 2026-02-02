@@ -16,6 +16,7 @@ public class SearchPage {
             "//div[@class='h1 catalog-info-count pe-25 px-md-0 text-nowrap']");
     private final By SMART_SEARCH_POPUP = By.xpath(
             "//table[@class='search__popup_head result active']");
+    private final By PRODUCT_CONTENT_NO_RESULT = By.xpath("//div[@class='product-content']//div[@class='result']");
 
     private WebDriver driver;
 
@@ -53,6 +54,10 @@ public class SearchPage {
 
     public String getNumberOfFoundItemsText() {
         return Waits.waitAndGetText(NUMBER_OF_FOUND_ITEMS_TEXT);
+    }
+
+    public String getProductContentNoResultText() {
+        return Waits.waitAndGetText(PRODUCT_CONTENT_NO_RESULT);
     }
 
     public void putKeywordInSearchField(String keyword) {
