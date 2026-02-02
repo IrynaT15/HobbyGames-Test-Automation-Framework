@@ -14,6 +14,8 @@ public class SearchPage {
     private final By PAGE_TITLE = By.xpath("//h1");
     private final By NUMBER_OF_FOUND_ITEMS_TEXT = By.xpath(
             "//div[@class='h1 catalog-info-count pe-25 px-md-0 text-nowrap']");
+    private final By SMART_SEARCH_POPUP = By.xpath(
+            "//table[@class='search__popup_head result active']");
 
     private WebDriver driver;
 
@@ -33,6 +35,10 @@ public class SearchPage {
         return Waits.wait(SEARCH_BUTTON).isDisplayed();
     }
 
+    public Boolean isSmartSearchPopupDisplayed() {
+        return Waits.wait(SMART_SEARCH_POPUP).isDisplayed();
+    }
+
     public void clickSearchButton() {
         Waits.waitAndClick(SEARCH_BUTTON);
     }
@@ -47,5 +53,9 @@ public class SearchPage {
 
     public String getNumberOfFoundItemsText() {
         return Waits.waitAndGetText(NUMBER_OF_FOUND_ITEMS_TEXT);
+    }
+
+    public void putKeywordInSearchField(String keyword) {
+        Waits.waitAndInput(SEARCH_FIELD, keyword);
     }
 }
