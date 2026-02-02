@@ -6,21 +6,6 @@ import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
 public class LoginPage {
-    public final String TITLE_TEXT = "Вход";
-    public final String SUBMIT_BUTTON_TEXT = "Вход";
-    public final String LOGIN_FIELD_PLACEHOLDER = "Email или телефон";
-    public final String PASSWORD_FIELD_PLACEHOLDER = "Пароль";
-    public final String FORGOT_LINK_TEXT = "Не помните?";
-    public final String REGISTER_LINK_TEXT = "Регистрация нового пользователя";
-    public final String ERROR_TEXT_FOR_EMPTY_LOGIN= "Введите телефон или электронную почту";
-    public final String ERROR_TEXT_FOR_EMPTY_PASSWORD = "Введите пароль";
-    public final String ERROR_TEXT_FOR_NOT_LOGGED_IN_EMAIL = "Неверный телефон/e-mail";
-    public final String ERROR_TEXT_FOR_INVALID_EMAIL = "Введённые данные некорректны";
-    public final String ERROR_TEXT_FOR_INVALID_PASSWORD = "Неверный пароль";
-    public final String NOT_LOGGED_IN_EMAIL = "123qweASD@gmail.com";
-    public final String INVALID_EMAIL = "123qwe";
-    public final String INVALID_PASSWORD = "123qwe";
-
     private final By TITLE = By.xpath("//div[@class='login-popup']/div[@class='h2']");
     private final By CLOSE_BUTTON = By.xpath("//div[@class='vex-close']");
     private final By SUBMIT_BUTTON = By.xpath("//input[@type='submit']");
@@ -41,32 +26,28 @@ public class LoginPage {
         this.driver = Driver.getDriver();
     }
 
-    public void clickCloseButtonInLoginPopup() {
+    public void clickCloseButton() {
         Waits.waitAndClick(CLOSE_BUTTON);
         logger.info("[Close] button is clicked in the Login popup.");
     }
 
-    public void clickForgotModalLinkInLoginPopup() {
+    public void clickForgotModalLink() {
         Waits.waitAndClick(FORGOT_LINK);
         logger.info("[Forgot] link is clicked in the Login popup.");
     }
 
-    public void clickRegisterModalLinkInLoginPopup() {
+    public void clickRegisterModalLink() {
         Waits.waitAndClick(REGISTER_LINK);
         logger.info("[Registration] link is clicked in the Login popup.");
     }
 
-    public void clickSubmitButtonInLoginPopup() {
+    public void clickSubmitButton() {
        Waits.waitAndClick(SUBMIT_BUTTON);
         logger.info("[Submit] button is clicked in the Login popup.");
     }
 
     public boolean isLoginPopupTitleDisplayed() {
         return Waits.waitAndCheckElementIsDisplayed(TITLE, "Title");
-    }
-
-    public boolean isCloseButtonDisplayedInLoginPopup() {
-        return Waits.waitAndCheckElementIsDisplayed(CLOSE_BUTTON, "[Close] button");
     }
 
     public boolean isSubmitButtonDisplayedInLoginPopup() {
@@ -105,30 +86,6 @@ public class LoginPage {
         return Waits.waitAndCheckElementIsDisplayed(ERROR_PASSWORD_INPUT, "Error message for incorrect password");
     }
 
-    public String getPageTitle() {
-        return driver.findElement(TITLE).getText();
-    }
-
-    public String getSubmitButtonTitle() {
-        return driver.findElement(SUBMIT_BUTTON).getAttribute("value");
-    }
-
-    public String getLoginFieldPlaceholderText() {
-        return driver.findElement(LOGIN_FIELD).getAttribute("placeholder");
-    }
-
-    public String getPasswordFieldPlaceholderText() {
-        return driver.findElement(PASSWORD_FIELD).getAttribute("placeholder");
-    }
-
-    public String getForgotModalLinkText() {
-        return driver.findElement(FORGOT_LINK).getText();
-    }
-
-    public String getRegisterModalLinkText() {
-        return driver.findElement(REGISTER_LINK).getText();
-    }
-
     public String getErrorMessage(By field) {
         return Waits.waitAndGetText(field);
     }
@@ -139,6 +96,6 @@ public class LoginPage {
 
     public void putValueAndSubmit(By field, String value) {
         putValueToField(field, value);
-        clickSubmitButtonInLoginPopup();
+        clickSubmitButton();
     }
 }
