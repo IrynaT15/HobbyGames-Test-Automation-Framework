@@ -1,6 +1,7 @@
+package tests;
+
 import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;
-import by.hobbygames.utils.*;
 import org.junit.jupiter.api.*;
 
 public class HomeTest {

@@ -5,11 +5,15 @@ import by.hobbygames.utils.*;
 import org.openqa.selenium.*;
 
 public class SearchPage {
-    private final String BASE_URL = "https://hobbygames.by/";
+    public final String SEARCH_RESULTS_PAGE_URL = "https://hobbygames.by/catalog/search";
+    public final String SEARCH_RESULTS_PAGE_TITLE = "Результаты поиска";
 
     private final By SEARCH_FIELD = By.xpath("//input[@type='search']");
     private final By SEARCH_BUTTON = By.xpath(
             "//a[@class='input--search__btn btn search-block__submit search-btn']");
+    private final By PAGE_TITLE = By.xpath("//h1");
+    private final By NUMBER_OF_FOUND_ITEMS_TEXT = By.xpath(
+            "//div[@class='h1 catalog-info-count pe-25 px-md-0 text-nowrap']");
 
     private WebDriver driver;
 
@@ -27,5 +31,21 @@ public class SearchPage {
 
     public Boolean isSearchButtonDisplayed() {
         return Waits.wait(SEARCH_BUTTON).isDisplayed();
+    }
+
+    public void clickSearchButton() {
+        Waits.waitAndClick(SEARCH_BUTTON);
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    public String getPageTitleText() {
+        return Waits.waitAndGetText(PAGE_TITLE);
+    }
+
+    public String getNumberOfFoundItemsText() {
+        return Waits.waitAndGetText(NUMBER_OF_FOUND_ITEMS_TEXT);
     }
 }

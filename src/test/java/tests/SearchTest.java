@@ -1,3 +1,5 @@
+package tests;
+
 import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;
 import org.junit.jupiter.api.*;
@@ -42,6 +44,16 @@ public class SearchTest {
                         "The Search field is not displayed on the page"),
                 () -> Assertions.assertTrue(searchPage.isSearchButtonDisplayed(),
                         "The Search button is not displayed on the page")
+        );
+    }
+
+    @Test
+    public void testSearchWithoutKeyword() {
+        searchPage.clickSearchButton();
+        assertAll("Search result for search without keyword",
+                () -> Assertions.assertEquals(searchPage.SEARCH_RESULTS_PAGE_URL, searchPage.getCurrentUrl()),
+                () -> Assertions.assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
+                () -> Assertions.assertTrue(searchPage.getNumberOfFoundItemsText().contains("товаров"))
         );
     }
 }
