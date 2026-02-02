@@ -1,3 +1,5 @@
+package tests;
+
 import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;
 import org.junit.jupiter.api.*;
