@@ -5,7 +5,9 @@ import by.hobbygames.pages.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;
-import testdata.keywords.*;
+import testdata.search.*;
+
+import static testdata.search.SearchTestData.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,9 +71,20 @@ public class SearchTest {
 
         @Test
         public void testSmartSearchPopupAppearsWhenKeywordIsEntered() {
-            searchPage.putKeywordInSearchField(Search.VALID_SEARCH);
+            searchPage.putKeywordInSearchField(SearchTestData.VALID_SEARCH);
             assertTrue(searchPage.isSmartSearchPopupDisplayed(),
                     "The Smart Search popup is not displayed");
+        }
+
+        @Test
+        public void testSearchWithValidKeyword() {
+            searchPage.putKeywordInSearchField(VALID_SEARCH);
+            searchPage.clickSearchButton();
+            assertAll("Search result for search with a valid keyword",
+                    () -> assertEquals(URL_FOR_VALID_SEARCH_RESULT, searchPage.getCurrentUrl()),
+                    () -> assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
+                    () -> assertTrue(searchPage.getNumberOfFoundItemsText().contains("товаров"))
+            );
         }
     }
 }
