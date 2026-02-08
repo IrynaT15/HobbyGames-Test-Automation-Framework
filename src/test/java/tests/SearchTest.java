@@ -5,7 +5,10 @@ import by.hobbygames.pages.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;
+import org.openqa.selenium.*;
 import testdata.search.*;
+
+import java.util.*;
 
 import static testdata.search.SearchTestData.*;
 
@@ -77,13 +80,18 @@ public class SearchTest {
         }
 
         @Test
-        public void testSearchForExisitingItems() {
+        public void testSearchForExistingItems() {
             searchPage.putKeywordInSearchField(EXISTING_SEARCH_ITEM);
             searchPage.clickSearchButton();
+            List<WebElement> foundItems = searchPage.getProductCards();
+            int expectedNumberOfItems = searchPage.getNumberOfFoundItemsFromText();
+            int foundAllItems = searchPage.getNumberOfFoundItemsInAllPages();
             assertAll("Search result for existing items",
-                    () -> assertEquals(URL_FOR_EXISTING_SEARCH_RESULT, searchPage.getCurrentUrl()),
-                    () -> assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
-                    () -> assertTrue(searchPage.getNumberOfFoundItemsText().contains("товаров"))
+//                    () -> assertEquals(URL_FOR_EXISTING_SEARCH_RESULT, searchPage.getCurrentUrl()),
+//                    () -> assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
+//                    () -> assertTrue(searchPage.getNumberOfFoundItemsText().contains("товаров")),
+                    () -> assertFalse(foundItems.isEmpty(), "Search results list is empty"),
+                    () -> assertEquals(foundAllItems, expectedNumberOfItems)
             );
         }
 
@@ -91,7 +99,7 @@ public class SearchTest {
         public void testSearchForNotExistingItems() {
             searchPage.putKeywordInSearchField(NOT_EXISTING_SEARCH_ITEM);
             searchPage.clickSearchButton();
-            assertAll("Search result for existing items",
+            assertAll("Search result for not existing items",
                     () -> assertEquals(URL_FOR_NOT_EXISTING_SEARCH_RESULT, searchPage.getCurrentUrl()),
                     () -> assertEquals(searchPage.SEARCH_RESULTS_PAGE_TITLE, searchPage.getPageTitleText()),
                     () -> assertEquals("0", searchPage.getNumberOfFoundItemsText()),

@@ -1,4 +1,4 @@
-package testdata.urls;
+package testdata.search.urls;
 
 import java.util.stream.*;
 

@@ -1,5 +1,6 @@
-package api;
+package api.tests;
 
+import api.assertions.*;
 import by.hobbygames.api.*;
 import org.apache.commons.logging.*;
 import org.junit.jupiter.api.*;
