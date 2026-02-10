@@ -4,6 +4,8 @@ import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class HomeTest {
     private HomePage homePage;
 
@@ -14,21 +16,25 @@ public class HomeTest {
         homePage.clickCookieAlertClose();
     }
 
-    @Test
-    public void testLoginButtonIsDisplayedOnHomePage() {
-        Assertions.assertTrue(homePage.isLoginButtonDisplayed(),
-                "The Login button is not displayed on the Home Page.");
-        Assertions.assertEquals(homePage.LOGIN_BUTTON_TITLE_TEXT, homePage.getLoginButtonTitle());
-    }
-
-    @Test
-    public void testLoginPopupAppearsWhenLoginButtonIsClicked() {
-        homePage.clickLoginButton();
-        Assertions.assertTrue(homePage.isLoginPopupDisplayed());
-    }
-
     @AfterEach
     public void quitDriver() {
         Driver.quit();
+    }
+
+    @DisplayName("Login Button on the Home page")
+    @Test
+    public void testLoginButtonIsDisplayedOnHomePage() {
+        assertAll("Login Button presence, button text",
+                () -> assertTrue(homePage.isLoginButtonDisplayed(),
+                        "The Login button is not displayed on the Home Page."),
+                () -> assertEquals(homePage.LOGIN_BUTTON_TITLE_TEXT, homePage.getLoginButtonTitle())
+        );
+    }
+
+    @DisplayName("Login popup appearance")
+    @Test
+    public void testLoginPopupAppearsWhenLoginButtonIsClicked() {
+        homePage.clickLoginButton();
+        assertTrue(homePage.isLoginPopupDisplayed());
     }
 }

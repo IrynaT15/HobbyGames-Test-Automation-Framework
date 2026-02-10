@@ -16,8 +16,9 @@ public class LoginTest {
         userAuthService = new UserAuthService();
     }
 
+    @DisplayName("Login with missing credentials")
     @Test
-    public void testLoginWithMissingCredentials() {
+    public void testResponseForLoginWithMissingCredentials() {
         userAuthService.doRequest("", "");
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -28,8 +29,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with missing Login and provided Password")
     @Test
-    public void testLoginWithMissingLogin() {
+    public void testResponseForLoginWithMissingLogin() {
         userAuthService.doRequest("", LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -40,8 +42,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with too short phone number")
     @Test
-    public void testLoginWithTooShortPhoneNumber() {
+    public void testResponseForLoginWithTooShortPhoneNumber() {
         userAuthService.doRequest(LoginCredentials.SHORT_PHONE, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -52,8 +55,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with too long phone number")
     @Test
-    public void testLoginWithTooLongPhoneNumber() {
+    public void testResponseForLoginWithTooLongPhoneNumber() {
         userAuthService.doRequest(LoginCredentials.LONG_PHONE, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -64,8 +68,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with not registered phone number")
     @Test
-    public void testLoginWithNotRegisteredPhoneNumber() {
+    public void testResponseForLoginWithNotRegisteredPhoneNumber() {
         userAuthService.doRequest(LoginCredentials.NOT_REGISTERED_PHONE, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -76,8 +81,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with missing Password and provided Login")
     @Test
-    public void testLoginWithMissingPassword() {
+    public void testResponseForLoginWithMissingPassword() {
         userAuthService.doRequest(LoginCredentials.REGISTERED_EMAIL, null);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -87,8 +93,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with wrong Password")
     @Test
-    public void testLoginWithWrongPassword() {
+    public void testResponseForLoginWithWrongPassword() {
         userAuthService.doRequest(LoginCredentials.REGISTERED_EMAIL, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -98,8 +105,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with invalid Email")
     @Test
-    public void testLoginWithInvalidEmail() {
+    public void testResponseForLoginWithInvalidEmail() {
         userAuthService.doRequest(LoginCredentials.INVALID_EMAIL, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -110,8 +118,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Login with not registered Password")
     @Test
-    public void testLoginWithNotRegisteredEmail() {
+    public void testResponseForLoginWithNotRegisteredEmail() {
         userAuthService.doRequest(LoginCredentials.NOT_REGISTERED_EMAIL, LoginCredentials.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -122,8 +131,9 @@ public class LoginTest {
         );
     }
 
+    @DisplayName("Security testing: Login sfter three failed attempts")
     @Test
-    public void testLoginResponseAfterThreeFailedLoginAttempts() {
+    public void testResponseAfterThreeFailedLoginAttempts() {
         int attemptsCount = 0;
         while (attemptsCount < 4) {
             userAuthService.doRequest(LoginCredentials.INVALID_EMAIL, LoginCredentials.PASSWORD);

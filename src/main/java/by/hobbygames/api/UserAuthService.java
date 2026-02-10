@@ -14,12 +14,6 @@ public class UserAuthService {
     private final String BASE_URL = "https://hobbygames.by/";
     private Response response;
 
-    private Map<String, String> getQueryParams() {
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("route", "account/login/modalAjax");
-        return queryParams;
-    }
-
     private Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -31,18 +25,13 @@ public class UserAuthService {
         response =
                 given()
                         .baseUri(BASE_URL)
-                        .queryParams(getQueryParams())
+                        .queryParams("route", "account/login/modalAjax")
                         .headers(getHeaders())
                         .formParam("login", login)
                         .formParam("password", password)
                         .formParam("scenario", "email")
                 .when()
                         .post();
-    }
-
-    public void printResponse() {
-        response.then()
-                .log().all();
     }
 
     public int getStatusCode() {
@@ -53,7 +42,7 @@ public class UserAuthService {
         return response.body().jsonPath().getString(path);
     }
 
-    public Boolean isSuccess() {
+    public boolean isSuccess() {
         return response.body().jsonPath().getBoolean("success");
     }
 }
