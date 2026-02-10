@@ -1,4 +1,4 @@
-package tests;
+package by.hobbygames.ui.tests;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;

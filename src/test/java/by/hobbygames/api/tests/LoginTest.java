@@ -1,11 +1,11 @@
-package api.tests;
+package by.hobbygames.api.tests;
 
-import api.assertions.*;
 import by.hobbygames.api.*;
+import by.hobbygames.api.assertions.*;
+import by.hobbygames.testdata.credentials.*;
+import by.hobbygames.testdata.errors.*;
 import org.apache.commons.logging.*;
 import org.junit.jupiter.api.*;
-import testdata.credentials.*;
-import testdata.errors.*;
 
 public class LoginTest {
     private static final Log log = LogFactory.getLog(LoginTest.class);

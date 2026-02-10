@@ -1,4 +1,4 @@
-package testdata.credentials;
+package by.hobbygames.testdata.credentials;
 
 public class LoginCredentials {
     public static final String REGISTERED_EMAIL = "it.19012026@gmail.com";

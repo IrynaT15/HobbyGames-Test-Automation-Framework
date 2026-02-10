@@ -1,11 +1,11 @@
-package tests;
+package by.hobbygames.ui.tests;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.pages.*;
+import by.hobbygames.testdata.credentials.*;
+import by.hobbygames.testdata.errors.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import testdata.credentials.*;
-import testdata.errors.*;
 
 public class LoginTest {
     private HomePage homePage;

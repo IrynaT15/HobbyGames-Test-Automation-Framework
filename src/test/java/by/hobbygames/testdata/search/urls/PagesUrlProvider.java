@@ -1,4 +1,4 @@
-package testdata.search.urls;
+package by.hobbygames.testdata.search.urls;
 
 import java.util.stream.*;
 

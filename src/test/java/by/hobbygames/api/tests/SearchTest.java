@@ -1,7 +1,8 @@
-package api.tests;
+package by.hobbygames.api.tests;
 
-import api.assertions.*;
+import by.hobbygames.api.assertions.*;
 import by.hobbygames.api.*;
+import by.hobbygames.api.assertions.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;

@@ -1,4 +1,4 @@
-package testdata.credentials;
+package by.hobbygames.testdata.credentials;
 
 import java.util.stream.*;
 

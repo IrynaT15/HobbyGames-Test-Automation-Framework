@@ -1,4 +1,4 @@
-package testdata.search;
+package by.hobbygames.testdata.search;
 
 import java.util.stream.*;
 
