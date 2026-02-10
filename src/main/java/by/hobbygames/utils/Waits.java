@@ -28,23 +28,6 @@ public class Waits {
         return wait(locator).getText();
     }
 
-    public static boolean waitAndCheckElementIsDisplayed(By locator, String elementStr) {
-        try {
-            if (wait(locator).isDisplayed()) {
-                logger.info(String.format("%s is displayed.", elementStr));
-            }
-            return wait(locator).isDisplayed();
-        } catch (Exception e) {
-            logger.info(String.format("%s is NOT found.", elementStr));
-            return false;
-        }
-    }
-
-    public static WebElement wait2(By locator) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
     public static boolean waitUntilIsDisplayed(By locator) {
         try {
             return wait(locator).isDisplayed();

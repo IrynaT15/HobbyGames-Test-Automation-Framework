@@ -21,7 +21,7 @@ public class HomeTest {
         Driver.quit();
     }
 
-    @DisplayName("Login Button on the Home page")
+    @DisplayName("Login Button presence on the Home Page")
     @Test
     public void testLoginButtonIsDisplayedOnHomePage() {
         assertAll("Login Button presence, button text",
@@ -31,7 +31,7 @@ public class HomeTest {
         );
     }
 
-    @DisplayName("Login popup appearance")
+    @DisplayName("Login popup appearance when Login Button is clicked")
     @Test
     public void testLoginPopupAppearsWhenLoginButtonIsClicked() {
         homePage.clickLoginButton();

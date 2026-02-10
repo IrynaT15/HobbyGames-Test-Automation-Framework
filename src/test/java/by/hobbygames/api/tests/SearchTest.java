@@ -43,7 +43,7 @@ public class SearchTest {
 
     @DisplayName("Search with search results:")
     @ParameterizedTest(name = "{index}: {0}")
-    @MethodSource("testdata.search.ApiSearchParamenetersProvider#provideSearchParameters")
+    @MethodSource("by.hobbygames.testdata.search.ApiSearchParametersProvider#provideSearchParameters")
     public void testSearchWithSearchParametersForExistingItems(String searchParameter) {
         searchService.doRequest(searchParameter);
 
@@ -68,7 +68,7 @@ public class SearchTest {
 
     @DisplayName("Search Response Time for different parameters:")
     @ParameterizedTest
-    @MethodSource("testdata.search.ApiSearchParamenetersProvider#provideParametersForSearchResponseTime")
+    @MethodSource("by.hobbygames.testdata.search.ApiSearchParametersProvider#provideParametersForSearchResponseTime")
     public void testSearchResponseTime(String searchParameter) {
         searchService.doRequest(searchParameter);
         long responseTime = searchService.getResponseTime();

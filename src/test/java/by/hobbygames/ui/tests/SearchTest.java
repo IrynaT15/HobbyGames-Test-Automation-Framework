@@ -31,11 +31,11 @@ public class SearchTest {
         @MethodSource("by.hobbygames.testdata.urls.PagesUrlProvider#providePagesUrl")
         public void testSearchFieldAndSearchButtonArePresentOnDifferentPages(String page) {
             searchPage.open(page);
-            assertAll("Search field and Search button on the page",
-                    () -> assertTrue(searchPage.isElementDisplayed(searchPage.SEARCH_FIELD),
-                            "The Search field is not displayed on the page"),
-                    () -> assertTrue(searchPage.isElementDisplayed(searchPage.SEARCH_BUTTON),
-                            "The Search button is not displayed on the page")
+            assertAll("Search Field and Search Button on the page",
+                    () -> assertTrue(searchPage.isElementDisplayed(searchPage.SEARCH_FIELD, "Search Field"),
+                            "The Search Field is not displayed on the page"),
+                    () -> assertTrue(searchPage.isElementDisplayed(searchPage.SEARCH_BUTTON, "Search Button"),
+                            "The Search Button is not displayed on the page")
             );
         }
     }
@@ -69,7 +69,7 @@ public class SearchTest {
         @Test
         public void testSmartSearchPopupAppearsWhenSearchParameterIsEntered() {
             searchPage.putSearchParameter(UiSearchTestData.EXISTING_SEARCH_ITEM);
-            assertTrue(searchPage.isElementDisplayed(searchPage.SMART_SEARCH_POPUP),
+            assertTrue(searchPage.isElementDisplayed(searchPage.SMART_SEARCH_POPUP, "Smart Search Popup"),
                     "The Smart Search popup is not displayed");
         }
 

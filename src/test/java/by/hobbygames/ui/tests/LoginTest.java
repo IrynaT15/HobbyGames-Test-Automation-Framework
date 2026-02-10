@@ -21,69 +21,74 @@ public class LoginTest {
         loginPage = new LoginPage();
     }
 
+    @AfterEach
+    public void quitDriver() {
+        Driver.quit();
+    }
+
     @DisplayName("UI elements of the Login popup")
     @Test
     public void testLoginPopupContainsAllRequiredElements() {
         assertAll("Login popup UI",
-                () -> assertTrue(loginPage.isLoginPopupTitleDisplayed(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.TITLE, "Title"),
                         "The Title is not displayed in the Login Popup."),
-                () -> assertTrue(loginPage.isLoginFieldDisplayedInLoginPopup(),
-                        "The Login field is not displayed in the Login Popup."),
-                () -> assertTrue(loginPage.isPasswordFieldDisplayedInLoginPopup(),
-                        "The [Password] field is not displayed in the Login Popup."),
-                () -> assertTrue(loginPage.isSubmitButtonDisplayedInLoginPopup(),
-                        "The [Submit] button is not displayed in the Login Popup."),
-                () -> assertTrue(loginPage.isForgotModalLinkDisplayedInLoginPopup(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.LOGIN_FIELD, "Login Field"),
+                        "The Login Field is not displayed in the Login Popup."),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.PASSWORD_FIELD, "Password Field"),
+                        "The Password fField is not displayed in the Login Popup."),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.SUBMIT_BUTTON, "Submit Button"),
+                        "The Submit Button is not displayed in the Login Popup."),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.FORGOT_LINK, "Forgot Link"),
                         "The Forgot Modal link is not displayed in the Login Popup."),
-                () -> assertTrue(loginPage.isRegisterModalLinkDisplayedInLoginPopup(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.REGISTER_LINK, "Register Link"),
                         "The Register Modal link is not displayed in the Login Popup.")
         );
     }
 
-    @DisplayName("Close Login popup with [X]] button")
+    @DisplayName("Closing Login Popup when Close Button is clicked")
     @Test
     public void testLoginPopupDisappearsWhenCloseButtonIsClicked() {
-        loginPage.clickCloseButton();
+        loginPage.clickElement(loginPage.CLOSE_BUTTON, "Close Button");
         assertFalse(homePage.isLoginPopupDisplayed(),
-                "The Login Popup is displayed after [Close] button is clicked.");
+                "The Login Popup is not closed when Close Button is clicked.");
     }
 
-    @DisplayName("Navigate from Login popup to Forgot popup with [Не помните?] link")
+    @DisplayName("Navigation from Login Popup to Forgot Popup when Forgot Link is clicked")
     @Test
     public void testLoginPopupDisappearsAndForgotPopupAppearsWhenForgotModalLinkIsClicked() {
-        loginPage.clickForgotModalLink();
-        assertAll("Navigate from Login popup to Forgot popup",
-                () -> assertFalse(homePage.isLoginPopupDisplayed(),
-                        "The Login Popup is displayed."),
-                () -> assertTrue(loginPage.isForgotPopupDisplayed(),
-                "Forgot popup is not displayed.")
+        loginPage.clickElement(loginPage.FORGOT_LINK, "Forgot Link");
+        assertAll("Navigation from Login popup to Forgot popup",
+                () -> assertFalse(homePage.isLoginPopupDisplayed(), "The Login Popup is displayed"),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.FORGOT_POPUP, "Forgot Popup"),
+                        "The Forgot Popup is not displayed.")
         );
     }
 
-    @DisplayName("Navigate from Login popup to Register popup with [Регистрация нового пользователя] link")
+    @DisplayName("Navigation from Login Popup to Register Popup when Register Link is clicked")
     @Test
     public void testLoginPopupDisappearsAndRegisterPopupAppearsWhenRegisterModalLinkIsClicked() {
-        loginPage.clickRegisterModalLink();
-        assertAll("Navigate from Login popup to Register popup",
-                () -> assertFalse(homePage.isLoginPopupDisplayed(),
-                        "The Login Popup is displayed."),
-                () -> assertTrue(loginPage.isRegisterPopupDisplayed(),
-                "Register popup is not displayed.")
+        loginPage.clickElement(loginPage.REGISTER_LINK, "Register Link");
+        assertAll("Navigation from Login Popup to Register popup",
+                () -> assertFalse(homePage.isLoginPopupDisplayed(),"The Login Popup is displayed."),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.REGISTER_POPUP, "Register Popup"),
+                        "The Register Popup is not displayed.")
         );
     }
 
-    @DisplayName("Error Message: logging with empty fields")
+    @DisplayName("Error Messages for attempt to authorise with empty fields")
     @Test
     public void testErrorMessagesForLoginWithEmptyLoginAndPassword() {
-        loginPage.clickSubmitButton();
+        loginPage.clickElement(loginPage.SUBMIT_BUTTON, "Submit Button");
         assertAll("Submit Login with empty fields",
-                () -> assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.REGISTER_POPUP,
+                                "Login Error Message"),
                         "The Error Message for empty login is not displayed."),
-                () -> Assertions.assertEquals(UiLoginErrors.LOGIN_IS_NOT_PROVIDED,
-                loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT)),
-                () -> assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
-                "The Error Message for empty password is not displayed."),
-                () -> Assertions.assertEquals(UiLoginErrors.PASSWORD_IS_NOT_PROVIDED,
+                () -> assertEquals(UiLoginErrors.LOGIN_IS_NOT_PROVIDED,
+                        loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT)),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_PASSWORD_INPUT,
+                                "Password Error Message"),
+                        "The Error Message for empty password is not displayed."),
+                () -> assertEquals(UiLoginErrors.PASSWORD_IS_NOT_PROVIDED,
                 loginPage.getErrorMessage(loginPage.ERROR_PASSWORD_INPUT))
         );
     }
@@ -93,7 +98,7 @@ public class LoginTest {
     public void testErrorMessagesForNotRegisteredEmail() {
         loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, LoginCredentials.generateNotRegisteredEmail());
         assertAll("Login with not registered email",
-                () -> assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_LOGIN_INPUT, "Login Error Message"),
                 "The Error Message for login with not logged in email value is not displayed."),
                 () -> assertEquals(UiLoginErrors.LOGIN_WITH_NOT_REGISTERED_EMAIL,
                 loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT))
@@ -105,7 +110,7 @@ public class LoginTest {
     public void testErrorMessagesForInvalidEmail() {
         loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, LoginCredentials.generateInvalidEmail());
         assertAll("Login with invalid email",
-                () -> assertTrue(loginPage.isErrorForIncorrectLoginInputDisplayed(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_LOGIN_INPUT, "Error Message"),
                         "The Error Message for login with invalid email is not displayed."),
                 () -> assertEquals(UiLoginErrors.LOGIN_WITH_INVALID_EMAIL,
                 loginPage.getErrorMessage(loginPage.ERROR_LOGIN_INPUT))
@@ -117,15 +122,10 @@ public class LoginTest {
     public void testErrorMessagesForInvalidPassword() {
         loginPage.putValueAndSubmit(loginPage.PASSWORD_FIELD, LoginCredentials.PASSWORD);
         assertAll("",
-                () -> assertTrue(loginPage.isErrorForIncorrectPasswordInputDisplayed(),
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_PASSWORD_INPUT, "Error Message"),
                         "The Error Message for invalid password is not displayed."),
                 () -> assertEquals(UiLoginErrors.PASSWORD_IS_WRONG,
                 loginPage.getErrorMessage(loginPage.ERROR_PASSWORD_INPUT))
         );
-    }
-
-    @AfterEach
-    public void quitDriver() {
-        Driver.quit();
     }
 }

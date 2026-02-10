@@ -2,7 +2,7 @@ package by.hobbygames.testdata.search;
 
 import java.util.stream.*;
 
-public class ApiSearchParamenetersProvider {
+public class ApiSearchParametersProvider {
     public static Stream<String> provideSearchParameters() {
         return Stream.of(
                 "Zombie",

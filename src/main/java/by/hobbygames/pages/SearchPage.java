@@ -2,6 +2,7 @@ package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.utils.*;
+import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
 import java.net.*;
@@ -27,20 +28,24 @@ public class SearchPage {
     private final By NEXT_BUTTON = By.xpath("//a[@class='next']");
 
     private WebDriver driver;
+    private static final Logger logger = LogManager.getLogger();
 
     public SearchPage() {
         this.driver = Driver.getDriver();
     }
 
     public void open(String url) {
+        logger.info("Opening the Search Page");
         driver.get(url);
     }
 
-    public boolean isElementDisplayed(By elementLocator) {
-        return Waits.wait(elementLocator).isDisplayed();
+    public boolean isElementDisplayed(By locator, String elementTitle) {
+        logger.info("Ensuring whether the {} is/isn't displayed", elementTitle);
+        return Waits.wait(locator).isDisplayed();
     }
 
     public void clickSearchButton() {
+        logger.info("Clicking the Search Button");
         Waits.waitAndClick(SEARCH_BUTTON);
     }
 
@@ -49,27 +54,33 @@ public class SearchPage {
     }
 
     public void putSearchParameterAndClickSearchButton(String searchParameter) {
+        logger.info("Putting a \"{}\" in the Search Field and submitting login", searchParameter);
         putSearchParameter(searchParameter);
         clickSearchButton();
     }
 
     public String getCurrentUrl() {
+        logger.info("Getting the current URL");
         return driver.getCurrentUrl();
     }
 
     public String getElementText(By locator) {
+        logger.info("Getting the title of the element: {}", locator);
         return Waits.waitAndGetText(locator);
     }
 
     public List<WebElement> getProductCards() {
+        logger.info("Getting Product Cards in the Search Results page");
         return driver.findElements(PRODUCT_CARD);
     }
 
     public int getNumberOfFoundItemsFromText() {
+        logger.info("Getting the total number of found items displayed in the page title");
         return Integer.parseInt(getElementText(NUMBER_OF_FOUND_ITEMS_TEXT).replaceAll("\\D+", ""));
     }
 
     public int getNumberOfFoundItemsInAllPages() {
+        logger.info("Getting the total number of found items in all Search Results pages");
         int count = 0;
 
         while (true) {
