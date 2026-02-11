@@ -15,10 +15,10 @@ public class LoginTest {
     @BeforeEach
     public void setupDriverAndOpenHomePageAndCloseCookieAlertAndClickLoginButton() {
         homePage = new HomePage();
+        loginPage = new LoginPage();
         homePage.open();
         homePage.clickCookieAlertClose();
         homePage.clickLoginButton();
-        loginPage = new LoginPage();
     }
 
     @AfterEach
