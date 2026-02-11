@@ -50,7 +50,7 @@ public class SearchTest {
             homePage = new HomePage();
             searchPage = new SearchPage();
             homePage.open();
-            homePage.clickCookieAlertClose();
+            homePage.acceptCookie();
         }
 
         @AfterEach
@@ -65,36 +65,37 @@ public class SearchTest {
             SearchAssertions.assertUrlAndPageTitleAndNotEmptyProductsList(searchPage, searchPage.BASE_URL);
         }
 
-        @DisplayName("Smart Search popup appears when search parameter is entered")
+        @DisplayName("Smart Search popup appears when entering search parameter")
         @Test
         public void testSmartSearchPopupAppearsWhenSearchParameterIsEntered() {
             searchPage.putSearchParameter(UiSearchTestData.EXISTING_SEARCH_ITEM);
             assertTrue(searchPage.isElementDisplayed(searchPage.SMART_SEARCH_POPUP, "Smart Search Popup"),
-                    "The Smart Search popup is not displayed");
+                    "Smart Search popup is not displayed");
         }
 
-        @DisplayName("Search results for existing items")
+        @DisplayName("SSearch results for existing items are displayed correctly")
         @ParameterizedTest
         @MethodSource("by.hobbygames.testdata.search.UiSearchTestData#provideParameterForExistingItems")
-        public void testSearchResultPageWithItems(String searchParameter) {
+        public void testSearchResultForExistingItems(String searchParameter) {
             searchPage.putSearchParameterAndClickSearchButton(searchParameter);
             SearchAssertions.assertUrlAndPageTitleAndNotEmptyProductsList(searchPage,
                     searchPage.RESULTS_URL + searchParameter);
         }
 
-        @DisplayName("Total count of found items")
+        @DisplayName("Total count of found items should match displayed count")
         @ParameterizedTest
         @MethodSource("by.hobbygames.testdata.search.UiSearchTestData#provideParameterForExistingItems")
-        public void testCountOfItemsInSearchResult(String searchParameter) {
+        public void testTotalCountMatches(String searchParameter) {
             searchPage.putSearchParameterAndClickSearchButton(searchParameter);
-            Assertions.assertEquals(
+            assertEquals(
                     searchPage.getNumberOfFoundItemsInAllPages(),
-                    searchPage.getNumberOfFoundItemsFromText());
+                    searchPage.getNumberOfFoundItemsFromText(),
+                    "Total number of found items does not match the displayed count");
         }
 
-        @DisplayName("Search results for not existing items")
+        @DisplayName("Search results page shows no items for non-existing search")
         @Test
-        public void testSearchForNotExistingItems() {
+        public void testSearchResultForNonExistingItems() {
             searchPage.putSearchParameterAndClickSearchButton(UiSearchTestData.NOT_EXISTING_ITEM);
             SearchAssertions.assertUrlAndPageTitleAndZeroItemsAndNoResultsText(searchPage,
                     searchPage.RESULTS_URL + UiSearchTestData.NOT_EXISTING_ITEM);
