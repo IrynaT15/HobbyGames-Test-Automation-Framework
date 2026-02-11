@@ -6,8 +6,6 @@ import io.qameta.allure.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
-import java.awt.*;
-
 public class HomePage {
     private final String BASE_URL = "https://hobbygames.by/";
     public final String LOGIN_BUTTON_TITLE_TEXT = "Войти";
@@ -30,7 +28,7 @@ public class HomePage {
     }
 
     @Step("Accept cookies")
-    public void clickCookieAlertClose() {
+    public void acceptCookie() {
         logger.info("Accepting cookies");
         Waits.waitAndClick(COOKIE_ALERT_CLOSE);
     }
