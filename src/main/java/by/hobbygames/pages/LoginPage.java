@@ -2,6 +2,7 @@ package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.utils.*;
+import io.qameta.allure.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
@@ -26,21 +27,25 @@ public class LoginPage {
         this.driver = Driver.getDriver();
     }
 
+    @Step("Click the test element: {elementTitle}")
     public void clickElement(By locator, String elementTitle) {
         logger.info("Clicking the {} on the Login Popup", elementTitle);
         Waits.waitAndClick(locator);
     }
 
+    @Step("Ensure the test element: {elementTitle} is displayed or is not displayed")
     public boolean isElementDisplayed(By locator, String elementTitle) {
         logger.info("Ensuring whether the {} is/isn't displayed on the Login Popup", elementTitle);
         return Waits.waitUntilIsDisplayed(locator);
     }
 
+    @Step("Get the Error Message")
     public String getErrorMessage(By field) {
         logger.info("Getting the Error Message text for the {}", field);
         return Waits.waitAndGetText(field);
     }
 
+    @Step("Put a test value and submit login")
     public void putValueAndSubmit(By field, String value) {
         logger.info("Putting {} into the {} field and submitting login", value, field);
         Waits.waitAndInput(field, value);

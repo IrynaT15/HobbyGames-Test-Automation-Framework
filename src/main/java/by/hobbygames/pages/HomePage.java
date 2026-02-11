@@ -2,8 +2,11 @@ package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.utils.*;
+import io.qameta.allure.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
+
+import java.awt.*;
 
 public class HomePage {
     private final String BASE_URL = "https://hobbygames.by/";
@@ -20,31 +23,37 @@ public class HomePage {
         this.driver = Driver.getDriver();
     }
 
+    @Step("Open the Home Page")
     public void open() {
         logger.info("Opening the Home Page: {}", BASE_URL);
         driver.get(BASE_URL);
     }
 
+    @Step("Accept cookies")
     public void clickCookieAlertClose() {
         logger.info("Accepting cookies");
         Waits.waitAndClick(COOKIE_ALERT_CLOSE);
     }
 
+    @Step("Click the Login Button")
     public void clickLoginButton() {
         logger.info("Clicking the Login Button");
         Waits.waitAndClick(LOGIN_BUTTON);
     }
 
+    @Step("Ensure the Login Button is displayed")
     public boolean isLoginButtonDisplayed() {
         logger.info("Ensuring the Login Button is displayed");
         return driver.findElement(LOGIN_BUTTON).isDisplayed();
     }
 
+    @Step("Ensure the Login Popup is displayed")
     public boolean isLoginPopupDisplayed() {
         logger.info("Ensuring whether the Login Popup is displayed or not");
         return Waits.waitUntilIsDisplayed(LOGIN_POPUP);
     }
 
+    @Step("Get the Login Button title")
     public String getLoginButtonTitle() {
         logger.info("Getting Text of the Login Button");
         return driver.findElement(LOGIN_BUTTON).getText();
