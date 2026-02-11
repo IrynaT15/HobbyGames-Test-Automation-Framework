@@ -96,7 +96,7 @@ public class LoginTest {
     @DisplayName("Error Message: logging with not registered email")
     @Test
     public void testErrorMessagesForNotRegisteredEmail() {
-        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, TestLoginData.generateNotRegisteredEmail());
+        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, TestLoginData.generateUnregisteredEmail());
         assertAll("Login with not registered email",
                 () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_LOGIN_INPUT, "Login Error Message"),
                 "The Error Message for login with not logged in email value is not displayed."),

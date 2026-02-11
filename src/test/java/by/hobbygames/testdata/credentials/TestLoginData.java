@@ -8,15 +8,15 @@ public class TestLoginData {
 
     private static final Faker faker = new Faker();
 
-    public static String generateNotRegisteredEmail() {
+    public static String generateUnregisteredEmail() {
         return "autotest_" + faker.number().digits(8) + "@example.com";
     }
 
     public static String generateInvalidEmail() {
-        return "autotest..." + faker.number().digits(8) + "@example.com";
+        return "autotest_" + faker.number().digits(8) + "@@example.com";
     }
 
-    public static String generateNotRegisteredPhoneNumber() {
+    public static String generateUnregisteredPhoneNumber() {
         return "+37599" + faker.number().digits(7);
     }
 

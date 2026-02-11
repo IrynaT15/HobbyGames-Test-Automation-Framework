@@ -16,9 +16,9 @@ public class LoginTest {
         userAuthService = new UserAuthService();
     }
 
-    @DisplayName("Login with missing credentials")
+    @DisplayName("Login attempt with missing credentials")
     @Test
-    public void testResponseForLoginWithMissingCredentials() {
+    public void testLoginWithMissingCredentialsFails() {
         userAuthService.doRequest("", "");
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -29,9 +29,9 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with missing Login and provided Password")
+    @DisplayName("Login attempt with missing email/phobe number")
     @Test
-    public void testResponseForLoginWithMissingLogin() {
+    public void testLoginWithMissingEmailOrPhoneNumberFails() {
         userAuthService.doRequest("", TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -42,9 +42,9 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with too short phone number")
+    @DisplayName("Login attempt with too short phone number")
     @Test
-    public void testResponseForLoginWithTooShortPhoneNumber() {
+    public void testLoginWithTooShortPhoneNumberFails() {
         userAuthService.doRequest(TestLoginData.generateShortPhoneNumber(), TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -55,9 +55,9 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with too long phone number")
+    @DisplayName("Login attempt with too long phone number")
     @Test
-    public void testResponseForLoginWithTooLongPhoneNumber() {
+    public void testLoginWithTooLongPhoneNumberFails() {
         userAuthService.doRequest(TestLoginData.generateLongPhoneNumber(), TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -68,10 +68,10 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with not registered phone number")
+    @DisplayName("Login attempt with unregistered phone number")
     @Test
-    public void testResponseForLoginWithNotRegisteredPhoneNumber() {
-        userAuthService.doRequest(TestLoginData.generateNotRegisteredPhoneNumber(), TestLoginData.PASSWORD);
+    public void testLoginWithUnregisteredPhoneNumberFails() {
+        userAuthService.doRequest(TestLoginData.generateUnregisteredPhoneNumber(), TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 ApiLoginErrors.PHONE_IS_NOT_REGISTERED,
@@ -81,9 +81,9 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with missing Password and provided Login")
+    @DisplayName("Login attempt with missing password")
     @Test
-    public void testResponseForLoginWithMissingPassword() {
+    public void testLoginWithMissingPasswordFails() {
         userAuthService.doRequest(TestLoginData.REGISTERED_EMAIL, null);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -93,9 +93,9 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with wrong Password")
+    @DisplayName("Login attempt with wrong password")
     @Test
-    public void testResponseForLoginWithWrongPassword() {
+    public void testLoginWithWrongPasswordFails() {
         userAuthService.doRequest(TestLoginData.REGISTERED_EMAIL, TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -105,9 +105,9 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with invalid Email")
+    @DisplayName("Login attempt with invalid email")
     @Test
-    public void testResponseForLoginWithInvalidEmail() {
+    public void testLoginWithInvalidEmailFails() {
         userAuthService.doRequest(TestLoginData.generateInvalidEmail(), TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
@@ -118,10 +118,10 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Login with not registered Password")
+    @DisplayName("Login attempt with unregistered email")
     @Test
-    public void testResponseForLoginWithNotRegisteredEmail() {
-        userAuthService.doRequest(TestLoginData.generateNotRegisteredEmail(), TestLoginData.PASSWORD);
+    public void testLoginWithUnregisteredEmailFails() {
+        userAuthService.doRequest(TestLoginData.generateUnregisteredEmail(), TestLoginData.PASSWORD);
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null,
@@ -131,14 +131,16 @@ public class LoginTest {
         );
     }
 
-    @DisplayName("Security testing: Login after three failed attempts")
+    @DisplayName("Specific error should be returned after the fourth failed login attempt")
     @Test
-    public void testResponseAfterThreeFailedLoginAttempts() {
-        int attemptsCount = 0;
-        while (attemptsCount < 4) {
-            userAuthService.doRequest(TestLoginData.generateInvalidEmail(), TestLoginData.PASSWORD);
-            attemptsCount ++;
+    public void testDifferentErrorIsReturnedAfterFourthFailedLoginAttempt() {
+        for (int i = 0; i < 4; i++) {
+            userAuthService.doRequest(
+                    TestLoginData.generateInvalidEmail(),
+                    TestLoginData.PASSWORD
+            );
         }
+
         LoginAssertions.assertFailedLogin(
                 userAuthService,
                 null, null, null,

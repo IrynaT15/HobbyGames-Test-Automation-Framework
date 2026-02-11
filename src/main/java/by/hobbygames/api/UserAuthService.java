@@ -26,7 +26,7 @@ public class UserAuthService {
 
     @Step("Run POST login request")
     public void doRequest(String login, String password) {
-        logger.info("Running POST login request");
+        logger.info("Sending POST request to /account/login/modalAjax endpoint with login: {}", login);
         response =
                 given()
                         .baseUri(BASE_URL)
@@ -41,19 +41,19 @@ public class UserAuthService {
 
     @Step("Get Status Code of the Response")
     public int getStatusCode() {
-        logger.info("Getting the Status Code of the Response");
+        logger.info("Received response with status code: {}", response.getStatusCode());
         return response.getStatusCode();
     }
 
     @Step("Get message from the Response body")
     public String getMessage(String path) {
-        logger.info("Getting message from the Response body");
+        logger.info("Error message for {}: {}", path, response.body().jsonPath().getString(path));
         return response.body().jsonPath().getString(path);
     }
 
     @Step("Ensure the Response body has \"success\"")
     public boolean isSuccess() {
-        logger.info("Ensuring the Response body has \\\"success\\\"\"");
+        logger.info("Response contains 'success': {}", response.body().jsonPath().getBoolean("success") );
         return response.body().jsonPath().getBoolean("success");
     }
 }
