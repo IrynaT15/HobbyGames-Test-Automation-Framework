@@ -33,45 +33,45 @@ public class SearchService {
         document = Jsoup.parse(response.asString());
     }
 
-    @Step("Get Status Code of the Response")
+    @Step("Get response status cod")
     public int getStatusCode() {
-        logger.info("Getting the Status Code of the Response");
+        logger.info("Getting response status code");
         return response.getStatusCode();
     }
 
-    @Step("Get Content Type of the Response")
+    @Step("Get response content type")
     public String getContentType() {
-        logger.info("Getting the Content Type of the Response");
+        logger.info("Getting response content type");
         return response.getContentType();
     }
 
-    @Step("Get the text of h1 of the Response body")
+    @Step("Get text from h1 element in response body")
     public String getH1Text() {
-        logger.info("Getting the text of h1 of the Response body");
+        logger.info("Getting text from h1 element in response body");
         return document.selectFirst("h1").text();
     }
 
-    @Step("Get the text of \"result\" class of the Response body")
+    @Step("Get text from element with class 'result' in response body")
     public String getResultsText() {
-        logger.info("Getting the text of \"result\" class of the Response body");
-        return document.selectFirst("[class='result']").text();
+        logger.info("Getting text from element with class 'result' in response body");
+        return document.selectFirst(".result").text();
     }
 
-    @Step("Get the total count of the Product Cards for the found items")
+    @Step("Get total number of product cards in search results")
     public int getProductCardsCount() {
-        logger.info("Getting the total count of the Product Cards for the found items");
+        logger.info("Getting total number of product cards in search results");
         return document.select(PRODUCT_CARD_CSS_LOCATOR).size();
     }
 
-    @Step("Get the Response time")
+    @Step("Get response time")
     public long getResponseTime() {
-        logger.info("Getting the Response time");
+        logger.info("Getting response time");
         return response.time();
     }
 
-    @Step("Ensure whether the Product Cards list is empty or not empty")
+    @Step("Check whether product cards list is empty")
     public boolean isProductCardsListEmpty() {
-        logger.info("Ensuring whether the Product Cards list is empty or not empty");
+        logger.info("Checking whether product cards list is empty");
         return document.select(PRODUCT_CARD_CSS_LOCATOR).isEmpty();
     }
 }

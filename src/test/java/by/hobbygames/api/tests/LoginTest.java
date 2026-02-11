@@ -5,15 +5,28 @@ import by.hobbygames.api.assertions.*;
 import by.hobbygames.testdata.credentials.*;
 import by.hobbygames.testdata.errors.*;
 import org.apache.commons.logging.*;
+import org.apache.logging.log4j.*;
 import org.junit.jupiter.api.*;
 
 public class LoginTest {
-    private static final Log log = LogFactory.getLog(LoginTest.class);
+    private static final Logger logger = LogManager.getLogger();
     UserAuthService userAuthService;
 
+    private static int testCounter = 0;
+    private static final int PAUSE_AFTER_TESTS = 3;
+    private static final long PAUSE_DURATION_MS = 30000;
+
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         userAuthService = new UserAuthService();
+
+        testCounter++;
+
+        if (testCounter % PAUSE_AFTER_TESTS == 0) {
+            logger.info("Pausing for " + (PAUSE_DURATION_MS / 1000) +
+                    " seconds to avoid exceeding of allowed login attempts limit");
+            Thread.sleep(PAUSE_DURATION_MS);
+        }
     }
 
     @DisplayName("Login attempt with missing credentials")

@@ -17,7 +17,7 @@ public class LoginTest {
         homePage = new HomePage();
         loginPage = new LoginPage();
         homePage.open();
-        homePage.clickCookieAlertClose();
+        homePage.acceptCookie();
         homePage.clickLoginButton();
     }
 
