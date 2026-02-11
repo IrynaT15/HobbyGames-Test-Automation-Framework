@@ -26,16 +26,16 @@ public class SearchTest {
             Driver.quit();
         }
 
-        @DisplayName("Search field and button on different pages")
+        @DisplayName("Search field and button should be displayed on each page")
         @ParameterizedTest
         @MethodSource("by.hobbygames.testdata.urls.PagesUrlProvider#providePagesUrl")
-        public void testSearchFieldAndSearchButtonArePresentOnDifferentPages(String page) {
+        public void testSearchFieldAndButtonAreDisplayedOnEachPage(String page) {
             searchPage.open(page);
-            assertAll("Search Field and Search Button on the page",
+            assertAll("Search elements visibility check",
                     () -> assertTrue(searchPage.isElementDisplayed(searchPage.SEARCH_FIELD, "Search Field"),
-                            "The Search Field is not displayed on the page"),
+                            "The Search Field is not displayed on page: " + page),
                     () -> assertTrue(searchPage.isElementDisplayed(searchPage.SEARCH_BUTTON, "Search Button"),
-                            "The Search Button is not displayed on the page")
+                            "The Search Button is not displayed on page: " + page)
             );
         }
     }
