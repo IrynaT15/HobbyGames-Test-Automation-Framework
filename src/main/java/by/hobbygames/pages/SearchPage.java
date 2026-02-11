@@ -38,13 +38,13 @@ public class SearchPage {
 
     @Step("Open the Search Results Page")
     public void open(String url) {
-        logger.info("Opening the Search Results Page");
+        logger.info("Navigating to page: {}", url);
         driver.get(url);
     }
 
     @Step("Ensure the test element: {elementTitle} is displayed or is not displayed")
     public boolean isElementDisplayed(By locator, String elementTitle) {
-        logger.info("Ensuring whether the {} is/isn't displayed", elementTitle);
+        logger.info("Checking visibility of {}", elementTitle);
         return Waits.wait(locator).isDisplayed();
     }
 

@@ -96,7 +96,7 @@ public class LoginTest {
     @DisplayName("Error Message: logging with not registered email")
     @Test
     public void testErrorMessagesForNotRegisteredEmail() {
-        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, LoginCredentials.generateNotRegisteredEmail());
+        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, TestLoginData.generateNotRegisteredEmail());
         assertAll("Login with not registered email",
                 () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_LOGIN_INPUT, "Login Error Message"),
                 "The Error Message for login with not logged in email value is not displayed."),
@@ -108,7 +108,7 @@ public class LoginTest {
     @DisplayName("Error Message: logging with invalid email")
     @Test
     public void testErrorMessagesForInvalidEmail() {
-        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, LoginCredentials.generateInvalidEmail());
+        loginPage.putValueAndSubmit(loginPage.LOGIN_FIELD, TestLoginData.generateInvalidEmail());
         assertAll("Login with invalid email",
                 () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_LOGIN_INPUT, "Error Message"),
                         "The Error Message for login with invalid email is not displayed."),
@@ -120,7 +120,7 @@ public class LoginTest {
     @DisplayName("Error Message: logging with invalid password")
     @Test
     public void testErrorMessagesForInvalidPassword() {
-        loginPage.putValueAndSubmit(loginPage.PASSWORD_FIELD, LoginCredentials.PASSWORD);
+        loginPage.putValueAndSubmit(loginPage.PASSWORD_FIELD, TestLoginData.PASSWORD);
         assertAll("",
                 () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_PASSWORD_INPUT, "Error Message"),
                         "The Error Message for invalid password is not displayed."),

@@ -2,7 +2,7 @@ package by.hobbygames.testdata.credentials;
 
 import com.github.javafaker.*;
 
-public class LoginCredentials {
+public class TestLoginData {
     public static final String REGISTERED_EMAIL = "it.19012026@gmail.com";
     public static final String PASSWORD = "Password123";
 
