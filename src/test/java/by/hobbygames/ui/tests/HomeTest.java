@@ -13,7 +13,7 @@ public class HomeTest {
     public void setupDriverAndOpenHomePageAndCloseCookieAlert() {
         homePage = new HomePage();
         homePage.open();
-        homePage.clickCookieAlertClose();
+        homePage.acceptCookie();
     }
 
     @AfterEach
