@@ -14,7 +14,6 @@ import io.qameta.allure.Step;
 public class SearchPage {
     public final String BASE_URL = "https://hobbygames.by/catalog/search";
     public final String RESULTS_URL = "https://hobbygames.by/catalog/search?keyword=";
-    public final String SEARCH_RESULTS_PAGE_TITLE = "Результаты поиска";
 
     public final By SEARCH_FIELD = By.xpath("//input[@type='search']");
     public final By SEARCH_BUTTON = By.xpath(
@@ -36,21 +35,22 @@ public class SearchPage {
         this.driver = Driver.getDriver();
     }
 
-    @Step("Open the Search Results Page")
+    @Step("Open the Search Results page: {url}")
     public void open(String url) {
-        logger.info("Navigating to page: {}", url);
+        logger.info("Open page: {}", url);
         driver.get(url);
     }
 
-    @Step("Ensure the test element: {elementTitle} is displayed or is not displayed")
+    @Step("Check if element '{elementTitle}' is displayed")
     public boolean isElementDisplayed(By locator, String elementTitle) {
-        logger.info("Checking visibility of {}", elementTitle);
-        return Waits.wait(locator).isDisplayed();
+        boolean elementDisplayed = Waits.wait(locator).isDisplayed();
+        logger.info("Element '{}' displayed: {}", elementTitle, elementDisplayed);
+        return elementDisplayed;
     }
 
-    @Step("Click the Search Button")
+    @Step("Click on Search button")
     public void clickSearchButton() {
-        logger.info("Clicking the Search Button");
+        logger.info("Clicking on Search button");
         Waits.waitAndClick(SEARCH_BUTTON);
     }
 
@@ -58,40 +58,42 @@ public class SearchPage {
         Waits.waitAndInput(SEARCH_FIELD, searchParameter);
     }
 
-    @Step("Put a Search Parameter in the Search Field and submit login")
+    @Step("Enter search parameter '{searchParameter}' in the Search field and submit")
     public void putSearchParameterAndClickSearchButton(String searchParameter) {
-        logger.info("Putting a \"{}\" in the Search Field and submitting login", searchParameter);
+        logger.info("Entering '{}' in the Search field and submitting search", searchParameter);
         putSearchParameter(searchParameter);
         clickSearchButton();
     }
 
-    @Step("Get the current URL")
+    @Step("Get current URL")
     public String getCurrentUrl() {
-        logger.info("Getting the current URL");
-        return driver.getCurrentUrl();
+        String currentUrl = driver.getCurrentUrl();
+        logger.info("Current URL: {}", currentUrl);
+        return currentUrl;
     }
 
-    @Step("Get the element text")
+    @Step("Get text of element '{locator}'")
     public String getElementText(By locator) {
-        logger.info("Getting the title of the element: {}", locator);
-        return Waits.waitAndGetText(locator);
+        String elementText = Waits.waitAndGetText(locator);
+        logger.info("Title of the element '{}': {}", locator, elementText);
+        return elementText;
     }
 
-    @Step("Get Product Cards in the Search Results page")
+    @Step("Get Product Cards in Search Results page")
     public List<WebElement> getProductCards() {
         logger.info("Getting Product Cards in the Search Results page");
         return driver.findElements(PRODUCT_CARD);
     }
 
-    @Step("Get the total number of found items displayed in the page title")
+    @Step("Get total number of found items from the page title")
     public int getNumberOfFoundItemsFromText() {
-        logger.info("Getting the total number of found items displayed in the page title");
-        return Integer.parseInt(getElementText(NUMBER_OF_FOUND_ITEMS_TEXT).replaceAll("\\D+", ""));
+        int totalNumber = Integer.parseInt(getElementText(NUMBER_OF_FOUND_ITEMS_TEXT).replaceAll("\\D+", ""));
+        logger.info("Total number of found items from the page title: {}", totalNumber);
+        return totalNumber;
     }
 
-    @Step("Get the total number of found items in all Search Results pages")
+    @Step("Get total number of found items across all Search Results pages")
     public int getNumberOfFoundItemsInAllPages() {
-        logger.info("Getting the total number of found items in all Search Results pages");
         int count = 0;
 
         while (true) {
@@ -101,14 +103,18 @@ public class SearchPage {
             if (Waits.waitUntilIsDisplayed(NEXT_BUTTON)) {
                 WebElement firstCard = cards.get(0);
                 WebElement nextButton = Waits.waitUntilClickable(NEXT_BUTTON);
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center'});", nextButton);
+
+                ((JavascriptExecutor) driver).executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});", nextButton
+                );
+
                 nextButton.click();
                 Waits.waitForStaleness(firstCard);
             } else {
                 break;
             }
         }
+        logger.info("Total number of found items in all pages: {}", count);
         return count;
     }
 }
