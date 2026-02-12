@@ -27,7 +27,7 @@ public class HomeTest {
         assertAll("Login Button presence, button text",
                 () -> assertTrue(homePage.isLoginButtonDisplayed(),
                         "The Login button is not displayed on the Home Page."),
-                () -> assertEquals(homePage.LOGIN_BUTTON_TITLE_TEXT, homePage.getLoginButtonTitle())
+                () -> assertEquals(homePage.LOGIN_BUTTON_TITLE_TEXT, homePage.getLoginButtonText())
         );
     }
 

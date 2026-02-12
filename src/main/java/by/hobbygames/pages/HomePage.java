@@ -21,9 +21,9 @@ public class HomePage {
         this.driver = Driver.getDriver();
     }
 
-    @Step("Open the Home Page")
+    @Step("Open the Home page")
     public void open() {
-        logger.info("Opening the Home Page: {}", BASE_URL);
+        logger.info("Opening Home Page: {}", BASE_URL);
         driver.get(BASE_URL);
     }
 
@@ -33,27 +33,30 @@ public class HomePage {
         Waits.waitAndClick(COOKIE_ALERT_CLOSE);
     }
 
-    @Step("Click the Login Button")
+    @Step("Click on Login button")
     public void clickLoginButton() {
-        logger.info("Clicking the Login Button");
+        logger.info("Clicking on Login button");
         Waits.waitAndClick(LOGIN_BUTTON);
     }
 
-    @Step("Ensure the Login Button is displayed")
+    @Step("Check if Login button is displayed")
     public boolean isLoginButtonDisplayed() {
-        logger.info("Ensuring the Login Button is displayed");
-        return driver.findElement(LOGIN_BUTTON).isDisplayed();
+        boolean buttonPresence = driver.findElement(LOGIN_BUTTON).isDisplayed();
+        logger.info("Login button displayed: {}", buttonPresence);
+        return buttonPresence;
     }
 
-    @Step("Ensure the Login Popup is displayed")
+    @Step("Wait and check if Login popup is displayed")
     public boolean isLoginPopupDisplayed() {
-        logger.info("Ensuring whether the Login Popup is displayed or not");
-        return Waits.waitUntilIsDisplayed(LOGIN_POPUP);
+        boolean popupPresence = Waits.waitUntilIsDisplayed(LOGIN_POPUP);
+        logger.info("Waiting. Login popup displayed: {}", popupPresence);
+        return popupPresence;
     }
 
-    @Step("Get the Login Button title")
-    public String getLoginButtonTitle() {
-        logger.info("Getting Text of the Login Button");
-        return driver.findElement(LOGIN_BUTTON).getText();
+    @Step("Get Login button text")
+    public String getLoginButtonText() {
+        String loginButtonText = driver.findElement(LOGIN_BUTTON).getText();
+        logger.info("Login button text: {}", loginButtonText);
+        return loginButtonText;
     }
 }
