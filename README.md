@@ -25,7 +25,6 @@ Within this project, both **UI** and **API** automated testing were implemented.
 
 ---
 
-
 ## Technologies Used
 
 - **Java**
