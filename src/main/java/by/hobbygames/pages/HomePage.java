@@ -46,10 +46,10 @@ public class HomePage {
         return buttonPresence;
     }
 
-    @Step("Wait and check if Login popup is displayed")
+    @Step("Check if Login popup is displayed")
     public boolean isLoginPopupDisplayed() {
         boolean popupPresence = Waits.waitUntilIsDisplayed(LOGIN_POPUP);
-        logger.info("Waiting. Login popup displayed: {}", popupPresence);
+        logger.info("Login popup displayed: {}", popupPresence);
         return popupPresence;
     }
 

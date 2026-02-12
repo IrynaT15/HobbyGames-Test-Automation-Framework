@@ -14,7 +14,6 @@ public class LoginPage {
     public final By FORGOT_POPUP = By.xpath("//div[@class='login-popup forgot_popup']");
     public final By REGISTER_LINK = By.xpath("//a[@class='footer-btn js-openRegisterModal']");
     public final By REGISTER_POPUP = By.xpath("//div[@class='register_popup']");
-
     public final By LOGIN_FIELD = By.xpath("//input[@name='login']");
     public final By PASSWORD_FIELD = By.xpath("//input[@name='password']");
     public final By ERROR_LOGIN_INPUT = By.xpath("//label[@data-scenario='login']/div[@class='error']");
@@ -27,27 +26,29 @@ public class LoginPage {
         this.driver = Driver.getDriver();
     }
 
-    @Step("Click the test element: {elementTitle}")
+    @Step("Click the element: {elementTitle}")
     public void clickElement(By locator, String elementTitle) {
-        logger.info("Clicking the {} on the Login Popup", elementTitle);
+        logger.info("Clicking element '{}'", elementTitle);
         Waits.waitAndClick(locator);
     }
 
-    @Step("Ensure the test element: {elementTitle} is displayed or is not displayed")
+    @Step("Check if the element: {elementTitle} is displayed")
     public boolean isElementDisplayed(By locator, String elementTitle) {
-        logger.info("Ensuring whether the {} is/isn't displayed on the Login Popup", elementTitle);
-        return Waits.waitUntilIsDisplayed(locator);
+        boolean elementDisplayed = Waits.waitUntilIsDisplayed(locator);
+        logger.info("Element '{}' is displayed: {}", elementTitle, elementDisplayed);
+        return elementDisplayed;
     }
 
-    @Step("Get the Error Message")
+    @Step("Get the error message for {field}")
     public String getErrorMessage(By field) {
-        logger.info("Getting the Error Message text for the {}", field);
-        return Waits.waitAndGetText(field);
+        String message = Waits.waitAndGetText(field);
+        logger.info("Error message for {}: {}", field, message);
+        return message;
     }
 
-    @Step("Put a test value and submit login")
+    @Step("Enter value '{value}' into field and submit login")
     public void putValueAndSubmit(By field, String value) {
-        logger.info("Putting {} into the {} field and submitting login", value, field);
+        logger.info("Entering value '{}' into field '{}' and submitting login", value, field);
         Waits.waitAndInput(field, value);
         clickElement(SUBMIT_BUTTON, "Submit Button");
     }
