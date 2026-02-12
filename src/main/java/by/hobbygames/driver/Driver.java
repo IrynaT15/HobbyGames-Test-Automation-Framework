@@ -22,8 +22,6 @@ public class Driver {
             } catch (Exception e) {
                 logger.error("Failed to create ChromeDriver", e);
             }
-        } else {
-            logger.info("Using existing driver");
         }
         return driver;
     }

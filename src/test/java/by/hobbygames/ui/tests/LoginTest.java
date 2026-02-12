@@ -80,7 +80,7 @@ public class LoginTest {
     public void testErrorMessagesForLoginWithEmptyLoginAndPassword() {
         loginPage.clickElement(loginPage.SUBMIT_BUTTON, "Submit Button");
         assertAll("Submit Login with empty fields",
-                () -> assertTrue(loginPage.isElementDisplayed(loginPage.REGISTER_POPUP,
+                () -> assertTrue(loginPage.isElementDisplayed(loginPage.ERROR_LOGIN_INPUT,
                                 "Login Error Message"),
                         "The Error Message for empty login is not displayed."),
                 () -> assertEquals(UiLoginErrors.LOGIN_IS_NOT_PROVIDED,
