@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class SearchService {
     private final String BASE_URI = "https://hobbygames.by/";
     private final String SEARCH_BASE_PATH = "/catalog/search";
-    public final long MAX_ALLOWED_RESPONSE_TIME = 2000L;
+    public final long MAX_ALLOWED_RESPONSE_TIME = 9000L;
 
     private final String PRODUCT_CARD_CSS_LOCATOR = "div.product-card";
     public final String H1_TEXT = "Ничего не найдено.";

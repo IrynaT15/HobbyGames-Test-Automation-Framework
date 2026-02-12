@@ -51,29 +51,30 @@ The project follows a layered structure separating framework logic and test impl
 ```
 src
 ├── main
-│ └── java
-│ └── by.hobbygames
-│ ├── api # API client classes and request logic
-│ ├── driver # WebDriver configuration (Singleton)
-│ ├── pages # Page Object classes
-│ └── utils # Waits class with explicit wait methods
+│   └── java
+│       └── by.hobbygames
+│           ├── api            # API client classes and request logic
+│           ├── driver         # WebDriver configuration (Singleton)
+│           ├── pages          # Page Object classes for UI
+│           └── utils          # Utility classes (Waits with explicit waits)
 │
 └── test
-└── java
-└── by.hobbygames
-├── api
-│ ├── assertions # Custom API assertions
-│ └── tests # API test classes
-│
-├── ui
-│ ├── assertions # UI-specific assertions
-│ └── tests # UI test classes
-│
-└── testdata
-├── credentials # Login test data
-├── errors # Expected error messages
-├── search # Search test data
-└── urls # Application URLs
+    └── java
+        └── by.hobbygames
+            ├── api
+            │   ├── assertions # Custom API assertions
+            │   └── tests      # API test classes
+            │
+            ├── ui
+            │   ├── assertions # UI-specific assertions
+            │   └── tests      # UI test classes
+            │
+            └── testdata
+                ├── credentials # Login test data
+                ├── errors      # Expected error messages
+                ├── search      # Search test data
+                └── urls        # Website URLs
+
 ```
 ---
 
