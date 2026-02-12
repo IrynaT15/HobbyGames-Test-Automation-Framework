@@ -1,4 +1,4 @@
-package api.assertions;
+package by.hobbygames.api.assertions;
 
 import by.hobbygames.api.*;
 

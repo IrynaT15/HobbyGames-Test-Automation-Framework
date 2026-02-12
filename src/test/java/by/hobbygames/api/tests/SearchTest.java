@@ -1,7 +1,8 @@
-package api.tests;
+package by.hobbygames.api.tests;
 
-import api.assertions.*;
 import by.hobbygames.api.*;
+import by.hobbygames.api.assertions.*;
+import by.hobbygames.testdata.search.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;
@@ -42,7 +43,7 @@ public class SearchTest {
 
     @DisplayName("Search with search results:")
     @ParameterizedTest(name = "{index}: {0}")
-    @MethodSource("testdata.search.ApiSearchParamenetersProvider#provideSearchParameters")
+    @MethodSource("by.hobbygames.testdata.search.ApiSearchParametersProvider#provideSearchParameters")
     public void testSearchWithSearchParametersForExistingItems(String searchParameter) {
         searchService.doRequest(searchParameter);
 
@@ -56,23 +57,23 @@ public class SearchTest {
     @DisplayName("Search with no results")
     @Test
     public void testSearchWithNoResults() {
-        searchService.doRequest("abracadabra");
+        searchService.doRequest(ApiSearchParametersProvider.NOT_EXISTING_ITEM);
 
         assertAll("Search parameters for not existing items",
                 () -> SearchAssertions.assertSearchResponseStatusCodeAndContentTypeAndH1Text(searchService),
-                () -> assertEquals("Ничего не найдено.", searchService.getResultsText()),
+                () -> assertEquals(searchService.H1_TEXT, searchService.getResultsText()),
                 () -> assertTrue(searchService.isProductCardsListEmpty(), "Product Cards list is not empty.")
         );
     }
 
     @DisplayName("Search Response Time for different parameters:")
     @ParameterizedTest
-    @MethodSource("testdata.search.ApiSearchParamenetersProvider#provideParametersForSearchResponseTime")
+    @MethodSource("by.hobbygames.testdata.search.ApiSearchParametersProvider#provideParametersForSearchResponseTime")
     public void testSearchResponseTime(String searchParameter) {
         searchService.doRequest(searchParameter);
         long responseTime = searchService.getResponseTime();
 
-        Assertions.assertTrue(responseTime <= 2000L,
+        Assertions.assertTrue(responseTime <= searchService.MAX_ALLOWED_RESPONSE_TIME,
                 "Response time for \"" + searchParameter + "\" is " + responseTime);
     }
 }

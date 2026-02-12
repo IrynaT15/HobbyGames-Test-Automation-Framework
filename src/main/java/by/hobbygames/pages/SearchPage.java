@@ -2,114 +2,119 @@ package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.utils.*;
+import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.*;
 
-import java.time.*;
+import java.net.*;
+import java.nio.charset.*;
 import java.util.*;
 
-public class SearchPage {
-    public final String SEARCH_RESULTS_PAGE_URL = "https://hobbygames.by/catalog/search";
-    public final String SEARCH_RESULTS_PAGE_TITLE = "Результаты поиска";
+import io.qameta.allure.Step;
 
-    private final By SEARCH_FIELD = By.xpath("//input[@type='search']");
-    private final By SEARCH_BUTTON = By.xpath(
+public class SearchPage {
+    public final String BASE_URL = "https://hobbygames.by/catalog/search";
+    public final String RESULTS_URL = "https://hobbygames.by/catalog/search?keyword=";
+
+    public final By SEARCH_FIELD = By.xpath("//input[@type='search']");
+    public final By SEARCH_BUTTON = By.xpath(
             "//a[@class='input--search__btn btn search-block__submit search-btn']");
-    private final By PAGE_TITLE = By.xpath("//h1");
-    private final By NUMBER_OF_FOUND_ITEMS_TEXT = By.xpath(
+    public final By PAGE_TITLE = By.xpath("//h1");
+    public final By NUMBER_OF_FOUND_ITEMS_TEXT = By.xpath(
             "//div[@class='h1 catalog-info-count pe-25 px-md-0 text-nowrap']");
-    private final By SMART_SEARCH_POPUP = By.xpath(
+    public final By SMART_SEARCH_POPUP = By.xpath(
             "//table[@class='search__popup_head result active']");
-    private final By PRODUCT_CONTENT_NO_RESULT = By.xpath(
+    public final By PRODUCT_CONTENT_NO_RESULT = By.xpath(
             "//div[@class='product-content']//div[@class='result']");
-    private final By PRODUCT_CARD = By.xpath("//div[@class='product-card  ']");
-    private final By NEXT_BUTTON = By.xpath("//div[@class='paginate']//li/a[@class='next']");
+    private final By PRODUCT_CARD = By.xpath("//div[normalize-space(@class)='product-card']");
+    private final By NEXT_BUTTON = By.xpath("//a[@class='next']");
 
     private WebDriver driver;
+    private static final Logger logger = LogManager.getLogger();
 
     public SearchPage() {
         this.driver = Driver.getDriver();
     }
 
+    @Step("Open the Search Results page: {url}")
     public void open(String url) {
+        logger.info("Open page: {}", url);
         driver.get(url);
     }
 
-    public Boolean isSearchFieldDisplayed() {
-        return Waits.wait(SEARCH_FIELD).isDisplayed();
+    @Step("Check if element '{elementTitle}' is displayed")
+    public boolean isElementDisplayed(By locator, String elementTitle) {
+        boolean elementDisplayed = Waits.wait(locator).isDisplayed();
+        logger.info("Element '{}' displayed: {}", elementTitle, elementDisplayed);
+        return elementDisplayed;
     }
 
-    public Boolean isSearchButtonDisplayed() {
-        return Waits.wait(SEARCH_BUTTON).isDisplayed();
-    }
-
-    public Boolean isSmartSearchPopupDisplayed() {
-        return Waits.wait(SMART_SEARCH_POPUP).isDisplayed();
-    }
-
-    public Boolean isNextButtonDisplayed() {
-        List<WebElement> buttons = driver.findElements(NEXT_BUTTON);
-        return !buttons.isEmpty() && buttons.get(0).isEnabled();
-    }
-
+    @Step("Click on Search button")
     public void clickSearchButton() {
+        logger.info("Clicking on Search button");
         Waits.waitAndClick(SEARCH_BUTTON);
     }
 
-    public void clickNextButton() {
-        driver.findElement(NEXT_BUTTON).click();
+    public void putSearchParameter(String searchParameter) {
+        Waits.waitAndInput(SEARCH_FIELD, searchParameter);
     }
 
+    @Step("Enter search parameter '{searchParameter}' in the Search field and submit")
+    public void putSearchParameterAndClickSearchButton(String searchParameter) {
+        logger.info("Entering '{}' in the Search field and submitting search", searchParameter);
+        putSearchParameter(searchParameter);
+        clickSearchButton();
+    }
+
+    @Step("Get current URL")
     public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+        String currentUrl = driver.getCurrentUrl();
+        logger.info("Current URL: {}", currentUrl);
+        return currentUrl;
     }
 
-    public String getPageTitleText() {
-        return Waits.waitAndGetText(PAGE_TITLE);
+    @Step("Get text of element '{locator}'")
+    public String getElementText(By locator) {
+        String elementText = Waits.waitAndGetText(locator);
+        logger.info("Title of the element '{}': {}", locator, elementText);
+        return elementText;
     }
 
-    public String getNumberOfFoundItemsText() {
-        return Waits.waitAndGetText(NUMBER_OF_FOUND_ITEMS_TEXT);
-    }
-
-    public String getProductContentNoResultText() {
-        return Waits.waitAndGetText(PRODUCT_CONTENT_NO_RESULT);
-    }
-
+    @Step("Get Product Cards in Search Results page")
     public List<WebElement> getProductCards() {
+        logger.info("Getting Product Cards in the Search Results page");
         return driver.findElements(PRODUCT_CARD);
     }
 
+    @Step("Get total number of found items from the page title")
     public int getNumberOfFoundItemsFromText() {
-        return Integer.parseInt(getNumberOfFoundItemsText().replaceAll("\\D+", ""));
+        int totalNumber = Integer.parseInt(getElementText(NUMBER_OF_FOUND_ITEMS_TEXT).replaceAll("\\D+", ""));
+        logger.info("Total number of found items from the page title: {}", totalNumber);
+        return totalNumber;
     }
 
-    private void waitForPageToChange(String currentUrl) {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.not(
-                        ExpectedConditions.urlToBe(currentUrl)
-                ));
-    }
-
+    @Step("Get total number of found items across all Search Results pages")
     public int getNumberOfFoundItemsInAllPages() {
         int count = 0;
 
         while (true) {
-            List<WebElement> cards = getProductCards();
+            List<WebElement> cards = Waits.waitUntilAllArePresent(PRODUCT_CARD);
             count += cards.size();
 
-            if (isNextButtonDisplayed()) {
-                String currentUrl = driver.getCurrentUrl();
-                clickNextButton();
-                waitForPageToChange(currentUrl);
+            if (Waits.waitUntilIsDisplayed(NEXT_BUTTON)) {
+                WebElement firstCard = cards.get(0);
+                WebElement nextButton = Waits.waitUntilClickable(NEXT_BUTTON);
+
+                ((JavascriptExecutor) driver).executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});", nextButton
+                );
+
+                nextButton.click();
+                Waits.waitForStaleness(firstCard);
             } else {
                 break;
             }
         }
+        logger.info("Total number of found items in all pages: {}", count);
         return count;
-    }
-
-    public void putKeywordInSearchField(String keyword) {
-        Waits.waitAndInput(SEARCH_FIELD, keyword);
     }
 }

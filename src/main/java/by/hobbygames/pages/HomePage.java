@@ -2,19 +2,17 @@ package by.hobbygames.pages;
 
 import by.hobbygames.driver.*;
 import by.hobbygames.utils.*;
+import io.qameta.allure.*;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 
 public class HomePage {
     private final String BASE_URL = "https://hobbygames.by/";
-
     public final String LOGIN_BUTTON_TITLE_TEXT = "Войти";
 
     private final By COOKIE_ALERT_CLOSE = By.xpath("//div[@class='cookie-banner__button']/button");
     private final By LOGIN_BUTTON = By.xpath("//div[@class='user-profile']/a/span[@class='cart-text']");
     private final By LOGIN_POPUP = By.xpath("//div[@class='login-popup']");
-    private final By SEARCH_FIELD = By.xpath("//input[@type='search']");
-    private final By SEARCH_BUTTON = By.xpath("//span[@class='icon icon-ic_search_black search-btn']");
 
     private WebDriver driver;
     private static final Logger logger = LogManager.getLogger();
@@ -23,30 +21,42 @@ public class HomePage {
         this.driver = Driver.getDriver();
     }
 
+    @Step("Open the Home page")
     public void open() {
+        logger.info("Opening Home Page: {}", BASE_URL);
         driver.get(BASE_URL);
-        logger.info("Home Page is opened.");
     }
 
-    public void clickCookieAlertClose() {
+    @Step("Accept cookies")
+    public void acceptCookie() {
+        logger.info("Accepting cookies");
         Waits.waitAndClick(COOKIE_ALERT_CLOSE);
-        logger.info("Cookies are accepted.");
     }
 
+    @Step("Click on Login button")
     public void clickLoginButton() {
+        logger.info("Clicking on Login button");
         Waits.waitAndClick(LOGIN_BUTTON);
-        logger.info("Login Button is clicked.");
     }
 
+    @Step("Check if Login button is displayed")
     public boolean isLoginButtonDisplayed() {
-        return driver.findElement(LOGIN_BUTTON).isDisplayed();
+        boolean buttonPresence = driver.findElement(LOGIN_BUTTON).isDisplayed();
+        logger.info("Login button displayed: {}", buttonPresence);
+        return buttonPresence;
     }
 
+    @Step("Check if Login popup is displayed")
     public boolean isLoginPopupDisplayed() {
-          return Waits.waitAndCheckElementIsDisplayed(LOGIN_POPUP, "Login popup");
+        boolean popupPresence = Waits.waitUntilIsDisplayed(LOGIN_POPUP);
+        logger.info("Login popup displayed: {}", popupPresence);
+        return popupPresence;
     }
 
-    public String getLoginButtonTitle() {
-        return driver.findElement(LOGIN_BUTTON).getText();
+    @Step("Get Login button text")
+    public String getLoginButtonText() {
+        String loginButtonText = driver.findElement(LOGIN_BUTTON).getText();
+        logger.info("Login button text: {}", loginButtonText);
+        return loginButtonText;
     }
 }

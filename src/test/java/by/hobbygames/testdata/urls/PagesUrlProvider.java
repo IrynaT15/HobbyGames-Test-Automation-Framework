@@ -1,10 +1,8 @@
-package testdata.search.urls;
+package by.hobbygames.testdata.urls;
 
 import java.util.stream.*;
 
 public class PagesUrlProvider {
-
-
     public static Stream<String> providePagesUrl() {
         return Stream.of(
                 "https://hobbygames.by/",

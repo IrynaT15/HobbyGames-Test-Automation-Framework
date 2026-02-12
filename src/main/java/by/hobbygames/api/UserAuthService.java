@@ -1,10 +1,12 @@
 package by.hobbygames.api;
 
 
+import io.qameta.allure.*;
 import io.restassured.*;
 import io.restassured.filter.session.*;
 import io.restassured.http.*;
 import io.restassured.response.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -12,13 +14,10 @@ import static io.restassured.RestAssured.given;
 
 public class UserAuthService {
     private final String BASE_URL = "https://hobbygames.by/";
+    private final String ROUTE = "account/login/modalAjax";
     private Response response;
 
-    private Map<String, String> getQueryParams() {
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("route", "account/login/modalAjax");
-        return queryParams;
-    }
+    private static final Logger logger = LogManager.getLogger();
 
     private Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
@@ -27,11 +26,13 @@ public class UserAuthService {
         return headers;
     }
 
+    @Step("Send POST login request")
     public void doRequest(String login, String password) {
+        logger.info("Sending POST request to {}} endpoint with login: {}", ROUTE, login);
         response =
                 given()
                         .baseUri(BASE_URL)
-                        .queryParams(getQueryParams())
+                        .queryParams("route", ROUTE)
                         .headers(getHeaders())
                         .formParam("login", login)
                         .formParam("password", password)
@@ -40,20 +41,24 @@ public class UserAuthService {
                         .post();
     }
 
-    public void printResponse() {
-        response.then()
-                .log().all();
-    }
-
+    @Step("Get response status code")
     public int getStatusCode() {
-        return response.getStatusCode();
+        int statusCode = response.getStatusCode();
+        logger.info("Received response with status code: {}", statusCode);
+        return statusCode;
     }
 
+    @Step("Get message from the Response body")
     public String getMessage(String path) {
-        return response.body().jsonPath().getString(path);
+        String message = response.body().jsonPath().getString(path);
+        logger.info("Error message for {}: {}", path, message);
+        return message;
     }
 
-    public Boolean isSuccess() {
-        return response.body().jsonPath().getBoolean("success");
+    @Step("Check response 'success' flag")
+    public boolean isSuccess() {
+        boolean success = response.body().jsonPath().getBoolean("success");
+        logger.info("Response contains 'success': {}", success);
+        return success;
     }
 }

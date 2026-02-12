@@ -1,4 +1,4 @@
-package testdata.errors;
+package by.hobbygames.testdata.errors;
 
 public class ApiLoginErrors {
     public static final String PHONE_IS_NOT_PROVIDED = "Данные не введены";

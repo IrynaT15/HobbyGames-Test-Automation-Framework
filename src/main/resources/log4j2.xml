@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true"
-               name="XMLConfigTest" packages="org.apache.logging.log4j.test">
-    <Filter type="ThresholdFilter" level="trace" />
+<Configuration status="warn" strict="true"
+               name="XMLConfigTest">
 
     <Appenders>
         <Console name="STDOUT">
-            <Layout type="PatternLayout" pattern="%m %n" />
+            <Layout type="PatternLayout" pattern="%d{HH:mm:ss} %-5p %c{1} - %m%n" />
         </Console>
         <RollingFile name="rollingFile"
                      fileName="logs/log4j2.log"
