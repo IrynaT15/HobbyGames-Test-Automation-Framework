@@ -32,7 +32,6 @@ public class Waits {
         try {
             return wait(locator).isDisplayed();
         } catch (TimeoutException e) {
-
             return false;
         }
     }

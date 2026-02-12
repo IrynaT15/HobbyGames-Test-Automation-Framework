@@ -1,6 +1,5 @@
 package by.hobbygames.api.tests;
 
-import by.hobbygames.api.assertions.*;
 import by.hobbygames.api.*;
 import by.hobbygames.api.assertions.*;
 import by.hobbygames.testdata.search.*;
@@ -74,7 +73,7 @@ public class SearchTest {
         searchService.doRequest(searchParameter);
         long responseTime = searchService.getResponseTime();
 
-        Assertions.assertTrue(responseTime <= 2000L,
+        Assertions.assertTrue(responseTime <= searchService.MAX_ALLOWED_RESPONSE_TIME,
                 "Response time for \"" + searchParameter + "\" is " + responseTime);
     }
 }
