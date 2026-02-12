@@ -4,7 +4,6 @@ import by.hobbygames.api.*;
 import by.hobbygames.api.assertions.*;
 import by.hobbygames.testdata.credentials.*;
 import by.hobbygames.testdata.errors.*;
-import org.apache.commons.logging.*;
 import org.apache.logging.log4j.*;
 import org.junit.jupiter.api.*;
 
