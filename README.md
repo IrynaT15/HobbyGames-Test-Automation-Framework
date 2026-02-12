@@ -1,5 +1,5 @@
 # Test Automation Framework
-## UI & API Automated Testing Project
+## for Service Testing
 ### hobbygames.by
 
 ---
