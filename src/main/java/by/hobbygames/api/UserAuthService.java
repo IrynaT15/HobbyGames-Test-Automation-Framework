@@ -16,6 +16,7 @@ public class UserAuthService {
     private final String BASE_URL = "https://hobbygames.by/";
     private final String ROUTE = "account/login/modalAjax";
     private Response response;
+
     private static final Logger logger = LogManager.getLogger();
 
     private Map<String, String> getHeaders() {

@@ -13,7 +13,6 @@ public class SearchService {
     private final String SEARCH_BASE_PATH = "/catalog/search";
 
     private final String PRODUCT_CARD_CSS_LOCATOR = "div.product-card";
-
     public final String H1_TEXT = "Ничего не найдено.";
 
     private Response response;
@@ -24,7 +23,6 @@ public class SearchService {
     public void doRequest(String value) {
         logger.info("Sending GET request to {} endpoint with value: {}", SEARCH_BASE_PATH, value);
         response =
-
                 given()
                         .baseUri(BASE_URI)
                         .basePath(SEARCH_BASE_PATH)
