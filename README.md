@@ -7,8 +7,6 @@
 ## Author
 
 Author: Iryna Tainikava  
-Course: Automated Testing with Java  
-Year: 2026  
 GitHub: https://github.com/IrynaT15/HobbyGames-Test-Automation-Framework
 
 ---
@@ -78,46 +76,6 @@ src
 ```
 ---
 
-## Implemented Test Coverage
-
-### UI Testing
-
-- Verification of login form visibility
-- Negative authorization scenarios
-- Validation of error messages
-- Verification of search input functionality
-- Validation of search results display
-
-### API Testing
-
-- POST request to `/login`
-- GET request to `/search`
-- Status code validation
-- Response structure validation
-- Validation of the `success` flag
-- Validation of error messages  
-
----
-
-## Logging and Reporting
-
-Logging is implemented using **Log4j**.  
-Logs are saved to a file during test execution.
-
-Test results are generated when running Maven build commands.
-
----
-
-## CI/CD
-
-A Jenkins job is configured to:
-
-- Pull the project from the remote repository
-- Execute automated tests
-- Generate test reports
-
----
-
 ## How to Run the Project
 
 ### Clone the repository
@@ -143,4 +101,3 @@ mvn clean test
 - Maven
 - Google Chrome browser
 - Internet connection
-
