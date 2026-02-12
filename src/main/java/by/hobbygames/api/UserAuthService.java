@@ -14,6 +14,7 @@ import static io.restassured.RestAssured.given;
 
 public class UserAuthService {
     private final String BASE_URL = "https://hobbygames.by/";
+    private final String ROUTE = "account/login/modalAjax";
     private Response response;
     private static final Logger logger = LogManager.getLogger();
 
@@ -24,13 +25,13 @@ public class UserAuthService {
         return headers;
     }
 
-    @Step("Run POST login request")
+    @Step("Send POST login request")
     public void doRequest(String login, String password) {
-        logger.info("Sending POST request to /account/login/modalAjax endpoint with login: {}", login);
+        logger.info("Sending POST request to {}} endpoint with login: {}", ROUTE, login);
         response =
                 given()
                         .baseUri(BASE_URL)
-                        .queryParams("route", "account/login/modalAjax")
+                        .queryParams("route", ROUTE)
                         .headers(getHeaders())
                         .formParam("login", login)
                         .formParam("password", password)
@@ -39,21 +40,24 @@ public class UserAuthService {
                         .post();
     }
 
-    @Step("Get Status Code of the Response")
+    @Step("Get response status code")
     public int getStatusCode() {
-        logger.info("Received response with status code: {}", response.getStatusCode());
-        return response.getStatusCode();
+        int statusCode = response.getStatusCode();
+        logger.info("Received response with status code: {}", statusCode);
+        return statusCode;
     }
 
     @Step("Get message from the Response body")
     public String getMessage(String path) {
-        logger.info("Error message for {}: {}", path, response.body().jsonPath().getString(path));
-        return response.body().jsonPath().getString(path);
+        String message = response.body().jsonPath().getString(path);
+        logger.info("Error message for {}: {}", path, message);
+        return message;
     }
 
-    @Step("Ensure the Response body has \"success\"")
+    @Step("Check response 'success' flag")
     public boolean isSuccess() {
-        logger.info("Response contains 'success': {}", response.body().jsonPath().getBoolean("success") );
-        return response.body().jsonPath().getBoolean("success");
+        boolean success = response.body().jsonPath().getBoolean("success");
+        logger.info("Response contains 'success': {}", success);
+        return success;
     }
 }

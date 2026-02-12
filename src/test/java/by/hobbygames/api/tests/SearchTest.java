@@ -3,6 +3,7 @@ package by.hobbygames.api.tests;
 import by.hobbygames.api.assertions.*;
 import by.hobbygames.api.*;
 import by.hobbygames.api.assertions.*;
+import by.hobbygames.testdata.search.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;
@@ -57,11 +58,11 @@ public class SearchTest {
     @DisplayName("Search with no results")
     @Test
     public void testSearchWithNoResults() {
-        searchService.doRequest("abracadabra");
+        searchService.doRequest(ApiSearchParametersProvider.NOT_EXISTING_ITEM);
 
         assertAll("Search parameters for not existing items",
                 () -> SearchAssertions.assertSearchResponseStatusCodeAndContentTypeAndH1Text(searchService),
-                () -> assertEquals("Ничего не найдено.", searchService.getResultsText()),
+                () -> assertEquals(searchService.H1_TEXT, searchService.getResultsText()),
                 () -> assertTrue(searchService.isProductCardsListEmpty(), "Product Cards list is not empty.")
         );
     }

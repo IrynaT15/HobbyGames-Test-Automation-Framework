@@ -3,6 +3,7 @@ package by.hobbygames.testdata.search;
 import java.util.stream.*;
 
 public class ApiSearchParametersProvider {
+    public static final String NOT_EXISTING_ITEM = "NotExistingItem";
     public static Stream<String> provideSearchParameters() {
         return Stream.of(
                 "Zombie",
